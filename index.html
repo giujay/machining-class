@@ -1,0 +1,1538 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ⅳ. 선반·밀링 가공과 종합 (학생용)</title>
+<style>
+:root{
+  --navy:#0F3057; --teal:#00879E; --gold:#FFC145; --ink:#1d2733; --muted:#5b6876;
+  --bg:#e9eef3; --paper:#ffffff; --line:#d6dee6; --teal-soft:#e2f3f5; --gold-soft:#fff4d6;
+  --navy-soft:#e6ecf3; --red:#c8423b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
+  font-family:'Malgun Gothic','맑은 고딕','Apple SD Gothic Neo',sans-serif;overflow:hidden}
+#viewport{position:absolute;left:0;right:0;top:0;bottom:56px;display:flex;align-items:center;justify-content:center}
+body.teacher #viewport{bottom:206px}
+#stage{width:1280px;height:720px;position:relative;transform-origin:center center;flex:none}
+.page{position:absolute;inset:0;background:var(--paper);border-radius:14px;box-shadow:0 6px 28px rgba(15,48,87,.14);
+  padding:38px 54px 30px;display:none;flex-direction:column;overflow:hidden}
+.page.on{display:flex}
+.kicker{font-size:15px;font-weight:700;color:var(--teal);letter-spacing:.5px;margin-bottom:6px}
+.kicker .pg{color:var(--muted);font-weight:400;margin-left:10px}
+h2{margin:0 0 18px;font-size:32px;color:var(--navy);line-height:1.25}
+h3{margin:0 0 8px;font-size:20px;color:var(--navy)}
+p{margin:0 0 10px;font-size:18px;line-height:1.6}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:26px;flex:1;min-height:0;margin-bottom:12px}
+.cols.c64{grid-template-columns:1.25fr 1fr}
+.cols.c46{grid-template-columns:1fr 1.25fr}
+.cols.c3{grid-template-columns:1fr 1fr 1fr}
+.col{display:flex;flex-direction:column;gap:12px;min-height:0}
+.card{background:var(--navy-soft);border-radius:10px;padding:14px 18px}
+.card.t{background:var(--teal-soft)}
+.card p:last-child{margin-bottom:0}
+.analogy{background:var(--gold-soft);border-left:6px solid var(--gold);border-radius:8px;padding:12px 16px;font-size:17px;line-height:1.6}
+.analogy b.lab,.supp b.lab{display:inline-block;font-size:14px;background:var(--gold);color:var(--navy);border-radius:4px;padding:1px 8px;margin-right:8px}
+.supp{background:var(--teal-soft);border-radius:8px;padding:10px 16px;font-size:15.5px;line-height:1.55}
+.supp b.lab{background:var(--teal);color:#fff}
+.oneline{margin-top:auto;background:var(--navy);color:#fff;border-radius:8px;padding:11px 18px;font-size:18px;line-height:1.5}
+.oneline b{color:var(--gold);margin-right:10px}
+ul.tight{margin:0;padding-left:22px;font-size:17.5px;line-height:1.6}
+ul.tight li{margin-bottom:3px}
+table.t{border-collapse:collapse;width:100%;font-size:16px;line-height:1.45}
+table.t th{background:var(--navy);color:#fff;font-weight:700;padding:7px 9px;text-align:center}
+table.t td{border-bottom:1px solid var(--line);padding:6px 9px;vertical-align:middle}
+table.t tr:nth-child(even) td{background:#f6f8fb}
+table.t td.c{text-align:center}
+.tag{display:inline-block;font-size:13px;font-weight:700;border-radius:4px;padding:1px 7px;color:#fff;background:var(--teal)}
+.tag.n{background:var(--navy)} .tag.g{background:var(--gold);color:var(--navy)} .tag.r{background:var(--red)}
+.formula{font-size:26px;font-weight:700;color:var(--navy);text-align:center;background:#fff;border:2px solid var(--teal);border-radius:10px;padding:8px}
+.wbox{background:#fbfcfd;border:1px solid var(--line);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px;min-height:0}
+.wbox svg{width:100%;height:auto;display:block}
+.ctrl{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:15px;color:var(--muted)}
+.ctrl button{font:inherit;font-size:14.5px;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:6px;padding:4px 11px;cursor:pointer}
+.ctrl button.on{background:var(--teal);color:#fff}
+.ctrl .sp{width:10px}
+.readout{font-size:16px;color:var(--navy);font-weight:700;min-height:22px}
+.flow{display:flex;flex-direction:column;gap:6px}
+.flow .st{background:#fff;border:1.5px solid var(--teal);border-radius:7px;padding:6px 10px;font-size:15.5px;text-align:center}
+.flow .ar{text-align:center;color:var(--teal);font-size:15px;line-height:1}
+.memo{display:none}
+.tonly{display:none}
+body.teacher .tonly{display:block}
+body.teacher .ans{display:block!important}
+.cover{justify-content:center;background:linear-gradient(135deg,var(--navy) 0%,#164a7a 60%,var(--teal) 100%);color:#fff}
+.cover h1{font-size:52px;margin:10px 0 16px;line-height:1.2}
+.cover .sub{font-size:22px;opacity:.9}
+.chips{display:flex;gap:12px;margin-top:40px;flex-wrap:wrap}
+.chips span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);border-radius:30px;padding:9px 18px;font-size:18px}
+.chips span b{color:var(--gold);margin-right:6px}
+.quiz{display:grid;grid-template-columns:1fr 1fr;gap:10px 26px;font-size:16.5px}
+.q{border-bottom:1px dashed var(--line);padding:4px 0 7px;line-height:1.5}
+.q button{font:inherit;font-size:13px;border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:5px;padding:1px 8px;margin-left:6px;cursor:pointer}
+.ans{display:none;color:var(--red);font-weight:700;margin-top:2px}
+.sheet{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:stretch}
+.sheet div{border:2px dashed var(--teal);border-radius:10px;min-height:120px;padding:10px;font-size:15px;color:var(--muted);position:relative}
+.sheet div::after{content:'→';position:absolute;right:-17px;top:42%;color:var(--teal);font-weight:700}
+.sheet div:last-child::after{content:''}
+#nav{position:fixed;left:0;right:0;bottom:0;height:56px;background:var(--navy);display:flex;align-items:center;gap:10px;padding:0 16px;color:#fff;font-size:15px}
+#nav button,#nav select{font:inherit;font-size:15px;border:0;border-radius:6px;padding:7px 14px;cursor:pointer}
+#nav button{background:rgba(255,255,255,.14);color:#fff}
+#nav button:hover{background:rgba(255,255,255,.26)}
+#nav select{background:#fff;color:var(--navy);max-width:340px}
+#nav #mode{margin-left:auto;background:var(--gold);color:var(--navy);font-weight:700}
+#count{min-width:70px;text-align:center}
+#memoPanel{display:none;position:fixed;left:0;right:0;bottom:56px;height:150px;background:#fffbea;border-top:3px solid var(--gold);
+  padding:10px 22px;overflow:auto;font-size:15.5px;line-height:1.6;color:var(--ink)}
+#memoPanel b.h{color:var(--navy)}
+body.teacher #memoPanel{display:block}
+#memoPanel ul{margin:2px 0;padding-left:20px}
+svg text{font-family:'Malgun Gothic','맑은 고딕',sans-serif}
+.supp b.lab.ex{background:var(--red)}
+.mini{font-size:15.5px;color:var(--muted);line-height:1.5;margin:0}
+.big{font-size:20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.box{border:1.5px solid var(--line);border-radius:9px;padding:10px 12px;background:#fff;font-size:15.5px;line-height:1.5}
+.box h4{margin:0 0 4px;font-size:16.5px;color:var(--navy)}
+.box.hl{border-color:var(--teal);background:var(--teal-soft)}
+.box.gd{border-color:var(--gold);background:var(--gold-soft)}
+.ctrl input[type=range]{width:180px;accent-color:#00879E}
+.sec-cover{justify-content:center;background:linear-gradient(135deg,#164a7a 0%,var(--teal) 100%);color:#fff}
+.sec-cover h1{font-size:48px;margin:6px 0 14px}
+.sec-cover .sub{font-size:21px;opacity:.92;line-height:1.6}
+.sec-cover .num{font-size:90px;font-weight:800;color:var(--gold);line-height:1}
+.sortq{display:flex;flex-wrap:wrap;gap:8px}
+.sortq button{font:inherit;font-size:15.5px;border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:20px;padding:5px 14px;cursor:pointer}
+.sortq button.phy{background:var(--teal);border-color:var(--teal);color:#fff}
+.sortq button.chm{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.bits{display:flex;gap:8px;align-items:center}
+.bits button{font:inherit;font-size:20px;font-weight:700;width:50px;height:50px;border-radius:8px;border:2px solid var(--navy);background:#fff;color:var(--navy);cursor:pointer}
+.bits button.on{background:var(--navy);color:var(--gold)}
+.lamp{display:inline-block;width:16px;height:16px;border-radius:50%;background:#cfd6dd;border:1.5px solid var(--navy);vertical-align:middle;margin:0 4px}
+.lamp.on{background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.tag{white-space:nowrap}
+.bigmini .mini{font-size:17px;line-height:1.6}
+
+
+/* 컴퓨터응용가공산업기사 수업자료 추가 스타일 */
+.lesson{display:inline-block;background:var(--gold);color:var(--navy);font-weight:800;border-radius:6px;padding:1px 9px;margin-right:8px;font-size:14px}
+.gq{display:inline-block;font-size:12.5px;font-weight:700;border-radius:4px;padding:0 6px;background:var(--navy-soft);color:var(--navy);border:1px solid var(--navy);margin-left:4px;vertical-align:1px}
+.chk{color:var(--red);font-weight:800}
+.word{background:#fff;border:1.5px dashed var(--teal);border-radius:8px;padding:8px 12px;font-size:15px;line-height:1.5}
+.word b{color:var(--teal)}
+.sortq button.c1{background:var(--teal);border-color:var(--teal);color:#fff}
+.sortq button.c2{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.sortq button.c3{background:var(--navy);border-color:var(--navy);color:#fff}
+.sortq button.bad{background:#fbe3e1;border-color:var(--red);color:var(--red)}
+.legend{display:flex;gap:14px;font-size:14px;color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+.ox{display:flex;gap:6px;margin-top:4px}
+.ox button{font:inherit;font-size:14px;border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:6px;padding:2px 12px;cursor:pointer}
+.ox button.right{background:var(--teal);border-color:var(--teal);color:#fff}
+.ox button.wrong{background:#fbe3e1;border-color:var(--red);color:var(--red)}
+.q .fb{font-size:14px;color:var(--muted);margin-top:2px;min-height:18px}
+.drill{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:16px}
+.drill input{font:inherit;font-size:16px;width:110px;padding:4px 8px;border:1.5px solid var(--teal);border-radius:6px}
+.drill button{font:inherit;font-size:14.5px;border:1px solid var(--teal);background:var(--teal);color:#fff;border-radius:6px;padding:5px 12px;cursor:pointer}
+.drill button.sub{background:#fff;color:var(--teal)}
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:6px}
+.steps div{counter-increment:s;background:#fff;border:1.5px solid var(--line);border-radius:8px;padding:6px 10px 6px 40px;position:relative;font-size:15.5px;line-height:1.5}
+.steps div::before{content:counter(s);position:absolute;left:9px;top:6px;width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:13px;font-weight:700;text-align:center;line-height:22px}
+.steps div.hl{border-color:var(--gold);background:var(--gold-soft)}
+body.teacher span.tonly{display:inline-block}
+/* 25차시 미니 모의고사 */
+.mk #mk-head{display:flex;align-items:center;gap:8px}
+.mk-no-big{font-size:26px;font-weight:800;color:var(--navy);min-width:40px}
+.mk #mk-q{font-size:19px;line-height:1.55;color:var(--ink);font-weight:600}
+.mk #mk-opts{display:flex;flex-direction:column;gap:6px}
+.mk-opt{font:inherit;font-size:16.5px;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;cursor:pointer;color:var(--ink)}
+.mk-opt:hover:not(:disabled){border-color:var(--teal)}
+.mk-opt.right{background:var(--teal);border-color:var(--teal);color:#fff}
+.mk-opt.wrong{background:#fbe3e1;border-color:var(--red);color:var(--red)}
+.mk-opt:disabled{cursor:default}
+.mk-match{display:flex;flex-direction:column;gap:6px;font-size:16px}
+.mk-match div{display:flex;align-items:center;gap:10px}
+.mk-match b{min-width:120px}
+.mk-match select{font:inherit;font-size:15px;padding:4px 6px;border:1.5px solid var(--teal);border-radius:6px;min-width:330px}
+.mk-match select.right{border-color:var(--teal);background:var(--teal-soft)}
+.mk-match select.wrong{border-color:var(--red);background:#fbe3e1}
+.mk-go{font:inherit;font-size:15px;align-self:flex-start;border:1px solid var(--teal);background:var(--teal);color:#fff;border-radius:6px;padding:5px 14px;cursor:pointer}
+.mk-ok{color:var(--teal);font-weight:800;font-size:16.5px}
+.mk-no{color:var(--red);font-weight:800;font-size:16.5px}
+.mk-ex{font-size:15px;line-height:1.5;color:var(--ink);margin-top:3px}
+.mk-res{font-size:24px;color:var(--navy)}
+.mk-res b{font-size:34px;color:var(--teal)}
+.mk-wl{display:flex;flex-wrap:wrap;gap:5px}
+.mk-wl button{font:inherit;font-size:13.5px;border:1px solid var(--red);background:#fff;color:var(--red);border-radius:6px;padding:3px 8px;cursor:pointer}
+.mk-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.mk-grid button{font:inherit;font-size:15px;font-weight:700;border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:6px;padding:5px 0;cursor:pointer}
+.mk-grid button.ok{background:var(--teal);border-color:var(--teal);color:#fff}
+.mk-grid button.no{background:#fbe3e1;border-color:var(--red);color:var(--red)}
+.mk-grid button.cur{outline:3px solid var(--gold);outline-offset:1px}
+/* 26차시 플래시카드 */
+.fc-card{background:#fff;border:2px solid var(--navy);border-radius:14px;min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:14px;text-align:center}
+.fc-code{font-size:64px;font-weight:800;color:var(--navy);letter-spacing:1px}
+.fc-mean{font-size:22px;font-weight:700;color:var(--teal);min-height:32px}
+.fc-tag{font-size:14px;font-weight:700;border-radius:5px;padding:1px 9px;background:var(--gold-soft);color:#9a7400;border:1px solid var(--gold)}
+
+/* ===== 새 디자인 (시안 B: 면 카드 · 공학 도면풍 팔레트) — 전 단원 공통 =====
+   base.css·extra.css 뒤에 덧붙는다. 내용·스크립트는 그대로 두고 모양만 바꾼다. */
+
+/* 1. 색: 옛 역할을 그대로 새 색에 일대일로 옮긴다 */
+:root{
+  --navy:#1B2430;        /* 잉크: 제목·외곽선 (옛 남색) */
+  --teal:#2457D6;        /* 코발트: 강조·치수선 (옛 청록) */
+  --gold:#E8A317;        /* 앰버: 핵심 표시 (옛 금색) — 글자색으로 쓰지 않고 면에만 */
+  --red:#C62828;         /* 정답·오답·그림 강조 */
+  --ink:#1B2430; --muted:#4A5563;
+  --bg:#D9DEE5;          /* 슬라이드 바깥 */
+  --paper:#F4F6F9;       /* 슬라이드 바탕 */
+  --card:#FFFFFF;
+  --line:#D5DAE1;
+  --teal-soft:#EAF0FC; --gold-soft:#FFF6E0; --navy-soft:#EEF1F5;
+  --gold-ink:#8A5A00;    /* 앰버 면 위의 글자 */
+  --shadow:0 1px 3px rgba(27,36,48,.10),0 2px 8px rgba(27,36,48,.06);
+}
+
+/* 2. 그림(SVG) 속 직접 적힌 색을 새 팔레트로 */
+[fill="#0F3057" i]{fill:#1B2430} [stroke="#0F3057" i]{stroke:#1B2430}
+[fill="#00879E" i]{fill:#2457D6} [stroke="#00879E" i]{stroke:#2457D6}
+[fill="#FFC145" i]{fill:#E8A317} [stroke="#FFC145" i]{stroke:#E8A317}
+[fill="#5B6876" i]{fill:#4A5563} [stroke="#5B6876" i]{stroke:#4A5563}
+[fill="#C8423B" i]{fill:#C62828} [stroke="#C8423B" i]{stroke:#C62828}
+[fill="#E2F3F5" i]{fill:#EAF0FC} [stroke="#E2F3F5" i]{stroke:#EAF0FC}
+[fill="#E6ECF3" i]{fill:#EEF1F5}
+[fill="#FFF4D6" i]{fill:#FFF6E0}
+[fill="#FBE3E1" i]{fill:#FDECEC}
+[fill="#7FC3CF" i]{fill:#8FB0EE} [stroke="#7FC3CF" i]{stroke:#8FB0EE}
+[fill="#9A7400" i]{fill:#8A5A00}
+[fill="#5FB3C2" i],[fill="#4FB4C4" i]{fill:#5C86E6}
+[stroke="#5FB3C2" i],[stroke="#4FB4C4" i]{stroke:#5C86E6}
+[style*="background:#0F3057" i]{background:#1B2430!important}
+[style*="background:#00879E" i]{background:#2457D6!important}
+[style*="background:#FFC145" i]{background:#E8A317!important}
+[style*="background:#fbe3e1" i]{background:#FDECEC!important;border-color:#C62828!important}
+.ctrl input[type=range]{accent-color:#2457D6}
+
+/* 3. 바탕과 쪽 */
+html,body{background:var(--bg)}
+.page{background:var(--paper);border-radius:12px;box-shadow:0 8px 30px rgba(27,36,48,.18);padding:34px 50px 26px}
+.kicker{font-size:16px;font-weight:700;color:var(--teal);letter-spacing:.3px;margin-bottom:4px}
+.kicker .pg{color:var(--muted)}
+h2{font-size:34px;color:var(--navy);letter-spacing:-.5px;margin-bottom:18px}
+h3{font-size:22px;color:var(--navy)}
+p{font-size:19px;line-height:1.6}
+.cols{gap:20px}
+.col{gap:12px}
+
+/* 4. 카드: 흰 면 + 약한 그림자 */
+.card,.card.t,.wbox,.box{background:var(--card);border:0;border-radius:10px;box-shadow:var(--shadow)}
+.card{padding:14px 18px}
+.card.t{box-shadow:var(--shadow),inset 4px 0 0 var(--teal)}
+.box{padding:11px 14px;font-size:17px;line-height:1.5}
+.box h4{font-size:19px;color:var(--navy)}
+.box.hl{background:var(--teal-soft);box-shadow:none}
+.box.gd{background:var(--gold-soft);box-shadow:none}
+.wbox{padding:10px;background:#fff}
+
+.analogy{background:var(--gold-soft);border-left:0;border-radius:10px;box-shadow:var(--shadow);padding:12px 16px;font-size:17px}
+.analogy b.lab,.supp b.lab{font-size:16px;background:var(--gold);color:var(--navy);border-radius:4px;padding:0 8px}
+.supp{background:var(--teal-soft);border-radius:10px;font-size:17px;padding:10px 16px}
+.supp b.lab{background:var(--teal);color:#fff}
+.supp b.lab.ex{background:var(--red)}
+.oneline{background:var(--navy);border-radius:10px;font-size:19px;padding:11px 18px}
+.oneline b{color:var(--gold)}
+
+ul.tight{font-size:19px}
+.mini{font-size:17px;color:var(--muted)}
+.bigmini .mini{font-size:18px}
+.word{background:#fff;border:1.5px dashed var(--teal);font-size:17px}
+
+/* 5. 표 */
+table.t{font-size:17px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+table.t th{background:var(--navy);padding:8px 10px}
+table.t td{border-bottom:1px solid var(--line);padding:6px 10px}
+table.t tr:nth-child(even) td{background:#F7F9FB}
+
+/* 6. 표시 조각 */
+.tag{font-size:16px;border-radius:4px}
+.tag.g{background:var(--gold);color:var(--navy)}
+.lesson{background:var(--gold);color:var(--navy);font-size:16px;border-radius:5px}
+.gq{font-size:16px;background:var(--navy-soft);color:var(--navy);border-color:var(--navy)}
+.formula{background:#fff;border:2px solid var(--teal);border-radius:10px;box-shadow:var(--shadow)}
+.readout{font-size:17px;color:var(--navy)}
+.legend{font-size:16px;color:var(--muted)}
+.flow .st{background:#fff;border:1.5px solid var(--teal);border-radius:8px;font-size:17px}
+.flow .ar{font-size:16px}
+.steps div{background:#fff;border:0;box-shadow:var(--shadow);font-size:17px}
+.steps div::before{background:var(--teal);font-size:14px}
+.steps div.hl{background:var(--gold-soft);box-shadow:inset 4px 0 0 var(--gold)}
+
+/* 7. 조작 단추 */
+.ctrl{font-size:16px;color:var(--muted)}
+.ctrl button,.q button,.drill button,.ox button{font-size:16px;border:1.5px solid var(--teal);background:#fff;color:var(--teal);border-radius:7px}
+.ctrl button{padding:4px 12px}
+.ctrl button.on,.drill button{background:var(--teal);color:#fff}
+.drill button.sub{background:#fff;color:var(--teal)}
+.drill{font-size:17px}
+.drill input{font-size:17px;border:1.5px solid var(--teal);border-radius:7px}
+.ox button{border-color:var(--navy);color:var(--navy);padding:2px 14px}
+.ox button.right{background:var(--teal);border-color:var(--teal);color:#fff}
+.ox button.wrong{background:#FDECEC;border-color:var(--red);color:var(--red)}
+.sortq button{font-size:17px;border-color:var(--navy);color:var(--navy)}
+.sortq button.bad{background:#FDECEC}
+
+/* 8. 퀴즈 */
+.quiz{font-size:17px;gap:10px 16px;align-content:start}
+.q{background:var(--card);border:0;border-radius:10px;box-shadow:var(--shadow);padding:8px 14px 9px}
+table.t td.c{white-space:nowrap}
+.q .fb{font-size:16px}
+.ans{color:var(--red)}
+
+/* 9. 표지·차시 표지: 그라데이션 대신 단색 */
+.cover{background:var(--navy)}
+.cover h1{font-size:54px;letter-spacing:-1px}
+.cover .kicker{color:var(--gold)!important}
+.chips span{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.28);font-size:18px}
+.chips span b{color:var(--gold)}
+/* 차시 표지: 밝은 바탕 + 왼쪽 코발트 띠 + 앰버 밑줄 */
+.sec-cover{background:var(--paper);color:var(--navy);box-shadow:0 8px 30px rgba(27,36,48,.18),inset 16px 0 0 var(--teal);padding-left:90px}
+.sec-cover .num{color:var(--teal);font-size:110px;letter-spacing:-3px}
+.sec-cover h1{color:var(--navy);font-size:48px;letter-spacing:-1px;margin:10px 0 18px;padding-bottom:16px;
+  background:linear-gradient(var(--gold),var(--gold)) left bottom/120px 6px no-repeat}
+.sec-cover .sub{font-size:21px;color:var(--muted);opacity:1}
+
+/* 10. 아래 막대와 교사 메모 */
+#nav{background:var(--navy);font-size:16px}
+#nav button,#nav select{font-size:16px}
+#nav #mode{background:var(--gold);color:var(--navy)}
+#memoPanel{background:#FFF8E8;border-top:3px solid var(--gold);font-size:17px}
+
+/* 11. 조각 HTML에 남은 작은 인라인 글자 크기를 최소 16px로 */
+[style*="font-size:13.5px"],[style*="font-size:14px"],[style*="font-size:14.5px"],[style*="font-size:15px"],[style*="font-size:15.5px"]{font-size:16px!important}
+
+/* 12. 다른 단원에서 쓰는 색·요소 */
+[fill="#0B2238" i]{fill:#11171F} [stroke="#0B2238" i]{stroke:#11171F}
+[fill="#16395C" i]{fill:#2A3644} [stroke="#16395C" i]{stroke:#2A3644}
+[fill="#BFE3EA" i],[fill="#9FD0D8" i]{fill:#C9D8F6}
+[style*="color:#0F3057" i]{color:var(--navy)!important}
+[style*="color:#5b6876" i]{color:var(--muted)!important}
+[style*="color:#c8423b" i]{color:var(--red)!important}
+[style*="border-color:#c8423b" i]{border-color:var(--red)!important}
+[style*="background:#c8423b" i]{background:var(--red)!important}
+[style*="border:1px solid #0F3057" i]{border-color:var(--navy)!important}
+.chk{color:var(--red)}
+/* Ⅳ 25차시 모의고사 */
+.mk #mk-q{font-size:20px}
+.mk-opt{font-size:17px;border:0;border-radius:9px;box-shadow:var(--shadow);background:#fff}
+.mk-opt:hover:not(:disabled){box-shadow:var(--shadow),inset 0 0 0 1.5px var(--teal)}
+.mk-opt.right{background:var(--teal);color:#fff}
+.mk-opt.wrong{background:#FDECEC;color:var(--red);box-shadow:inset 0 0 0 1.5px var(--red)}
+.mk-match{font-size:17px}
+.mk-match select{font-size:16px;border-radius:7px}
+.mk-go{font-size:16px;border-radius:7px}
+.mk-ok,.mk-no{font-size:17px}
+.mk-ok{color:var(--teal)} .mk-no{color:var(--red)}
+.mk-ex{font-size:16px}
+.mk-wl button{font-size:16px;border-color:var(--red);color:var(--red)}
+.mk-grid button{font-size:16px;border-color:var(--navy);color:var(--navy);border-radius:7px}
+.mk-grid button.ok{background:var(--teal);border-color:var(--teal);color:#fff}
+.mk-grid button.cur{outline-color:var(--gold)}
+/* Ⅳ 26차시 플래시카드 */
+.fc-card{border:0;border-radius:14px;box-shadow:var(--shadow);background:#fff}
+.fc-code{color:var(--navy)}
+.fc-mean{color:var(--teal)}
+.fc-tag{font-size:16px;background:var(--gold-soft);color:var(--gold-ink);border-color:var(--gold)}
+
+/* 13. 교사용 쪽(학생 보기에서 숨김): 표·메모를 촘촘하게 */
+.teacher-only p{font-size:16px;line-height:1.5}
+.teacher-only table.t{font-size:16px}
+.teacher-only table.t td{padding:4px 9px;line-height:1.35}
+
+/* Ⅳ단원 전용: 26차시 '헷갈리는 것 모음' 표 간격 */
+section[data-title="헷갈리는 것 모음"] table.t{font-size:16px;line-height:1.35}
+section[data-title="헷갈리는 것 모음"] table.t td{padding:4px 9px}
+
+body.print #memoPanel,body.print #nav{display:none!important}body.print #viewport{bottom:0!important}
+/* 자습판(Ⅲ·Ⅳ): 기출 번호 학생에게 표시, 휴대폰·태블릿 대응 */
+span.tonly{display:inline-block}
+.q .fb .fb-ok{color:#1f7a3a}
+.q .fb .fb-no{color:var(--red)}
+.q .fb{color:var(--ink);font-size:15px;line-height:1.35}
+.q .fb .fb-show{font:inherit;font-size:15px;border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:6px;padding:1px 10px;margin-left:4px;cursor:pointer}
+#rot{display:none;position:fixed;left:0;right:0;top:0;z-index:50;background:var(--navy);color:#fff;font-size:15px;line-height:1.45;padding:10px 12px;gap:10px;align-items:center}
+#rot button{flex:none;font:inherit;border:0;border-radius:6px;background:#fff;color:var(--navy);padding:6px 12px;font-weight:700}
+@media (orientation:portrait) and (max-width:900px){body:not(.rot-off) #rot{display:flex}}
+@media (pointer:coarse){
+  #nav{height:64px}
+  #viewport{bottom:64px}
+  #nav button{padding:10px 16px;font-size:17px}
+  #nav select{font-size:16px;padding:9px 8px}
+}
+@media (max-width:700px){
+  #nav{gap:6px;padding:0 8px}
+  #nav select{max-width:40vw;min-width:0}
+  #nav #count{font-size:14px;white-space:nowrap}
+}
+.flow .st.lit{background:var(--gold);color:var(--navy);box-shadow:0 0 0 3px rgba(232,163,23,.35)}
+@media (max-width:480px){#nav select{display:none}}
+
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#00879E"/></marker>
+<marker id="ahn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#0F3057"/></marker>
+<marker id="ahs" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M10 0L0 5L10 10z" fill="#0F3057"/></marker>
+<pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#e6ecf3"/><line x1="0" y1="0" x2="0" y2="8" stroke="#0F3057" stroke-width="2"/></pattern>
+</defs></svg>
+
+<div id="viewport"><div id="stage">
+<!-- 표지 -->
+<section class="page cover" data-title="표지">
+  <div class="kicker" style="color:var(--gold)">과정평가형 컴퓨터응용가공산업기사 · 외부평가 대비 · 2027 교재 Ⅳ. 선반·밀링 가공 (18~20쪽) · 종합</div>
+  <h1>Ⅳ. 선반·밀링 가공<br>그리고 외부평가 종합</h1>
+  <div class="sub">능력단위: 편심·나사 작업(1502010107) · 탭·드릴·보링 가공(1502010206)</div>
+  <div class="chips">
+    <span><b>22</b>나사·편심·바이트</span><span><b>23</b>탭·드릴·보링</span><span><b>24</b>공구 마모·칩·인서트</span><span><b>25</b>기출 실전</span><span><b>26</b>최종 정리</span>
+  </div>
+  
+</section>
+
+<!-- 학습 흐름 -->
+<section class="page" data-title="Ⅳ단원·종합 학습 흐름">
+  <div class="kicker">Ⅳ. 선반·밀링 가공 · 종합 <span class="pg">들어가기</span></div>
+  <h2>공구를 알면 가공이 보인다</h2>
+  <div class="cols c64">
+    <div class="col">
+      <table class="t">
+        <tr><th>차시</th><th>주제</th><th>핵심 질문</th><th>교재</th></tr>
+        <tr><td class="c"><span class="lesson">22</span></td><td>나사·편심 작업, 바이트</td><td>리드와 피치는 어떻게 다른가?</td><td class="c">18~19쪽</td></tr>
+        <tr><td class="c"><span class="lesson">23</span></td><td>탭·드릴·보링 가공</td><td>구멍은 어떤 순서로 완성되는가?</td><td class="c">20쪽</td></tr>
+        <tr><td class="c"><span class="lesson">24</span></td><td>공구 마모·수명·칩·절삭유·인서트</td><td>공구는 왜, 어떻게 닳는가?</td><td class="c">19쪽</td></tr>
+        <tr><td class="c"><span class="lesson">25</span></td><td>기출 실전(미니 모의고사)</td><td>지금 몇 점인가?</td><td class="c">기출</td></tr>
+        <tr><td class="c"><span class="lesson">26</span></td><td>최종 정리(코드 카드·공식·함정)</td><td>시험장에 무엇을 들고 갈 것인가?</td><td class="c">전체</td></tr>
+      </table>
+      <div class="card t"><p><b>한 줄 요약</b> — Ⅰ~Ⅲ단원이 '재고, 읽고, 프로그램하는 법'이었다면, Ⅳ단원은 실제로 깎는 <b>공구</b>의 이야기이다. 마지막 두 차시는 외부평가 형식으로 실력을 점검한다.</p></div>
+    </div>
+    <div class="col">
+      <div class="wbox"><svg viewBox="0 0 460 280">
+        <g font-size="14" text-anchor="middle" font-weight="700">
+          <rect x="20" y="20" width="200" height="50" rx="8" fill="#e6ecf3" stroke="#0F3057" stroke-width="2"/><text x="120" y="50" fill="#0F3057">Ⅰ 측정 (1~6)</text>
+          <rect x="240" y="20" width="200" height="50" rx="8" fill="#e6ecf3" stroke="#0F3057" stroke-width="2"/><text x="340" y="50" fill="#0F3057">Ⅱ 기계요소설계 (7~11)</text>
+          <rect x="20" y="90" width="420" height="50" rx="8" fill="#e2f3f5" stroke="#00879E" stroke-width="2"/><text x="230" y="120" fill="#0F3057">Ⅲ 컴퓨터활용생산 (12~21)</text>
+          <rect x="20" y="160" width="420" height="50" rx="8" fill="#00879E"/><text x="230" y="190" fill="#fff">Ⅳ 선반·밀링 가공 (22~24)</text>
+          <rect x="20" y="230" width="420" height="44" rx="8" fill="#0F3057"/><text x="230" y="258" fill="#FFC145">종합: 기출 실전 · 최종 정리 (25~26)</text>
+        </g></svg></div>
+      <div class="analogy"><b class="lab">비유</b>요리를 배울 때 저울 쓰는 법(측정), 레시피 읽는 법(도면), 조리 기구 다루는 법(CNC)을 익혔다면, 이제 칼과 냄비(공구) 자체를 알아볼 차례이다.</div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 22차시 표지 -->
+<section class="page sec-cover" data-title="22차시 · 나사·편심 작업과 바이트">
+  <div class="num">22</div>
+  <h1>나사·편심 작업과 선반 바이트</h1>
+  <div class="sub">선반 바이트의 종류 / 나사의 용어(나사산·피치·리드·바깥지름·골지름)<br>리드 = 줄 수 × 피치, 회전각과 이동량 / 나사의 간략도·표기 / 나사용 게이지 / 편심 작업 / 리드 스크루</div>
+  
+</section>
+
+<!-- 바이트 -->
+<section class="page" data-title="선반 바이트의 종류">
+  <div class="kicker"><span class="lesson">22차시</span>절삭 공구의 형상 <span class="pg">교재 18쪽 1)</span></div>
+  <h2>무엇을 깎느냐에 따라 바이트가 다르다</h2>
+  <div class="grid3" style="flex:1;min-height:0">
+    <div class="box"><h4>(a) 외경 바이트</h4><svg viewBox="0 0 200 70" style="width:100%;height:58px"><rect x="10" y="40" width="180" height="26" fill="#fff4d6" stroke="#b8963c"/><path d="M120 40 l20 -30 h30 l-30 30z" fill="#00879E"/><path d="M140 30 h-40" stroke="#c8423b" stroke-width="2" marker-end="url(#ah)"/></svg><p class="mini">바깥지름을 길이 방향으로</p></div>
+    <div class="box"><h4>(b) 구석 바이트</h4><svg viewBox="0 0 200 70" style="width:100%;height:58px"><path d="M10 66 V40 H110 V20 H190 V66 Z" fill="#fff4d6" stroke="#b8963c"/><path d="M110 40 l-10 -30 h20z" fill="#00879E"/></svg><p class="mini">단(구석)이 진 부분</p></div>
+    <div class="box"><h4>(c) 홈 바이트</h4><svg viewBox="0 0 200 70" style="width:100%;height:58px"><path d="M10 66 V30 H90 V48 H110 V30 H190 V66 Z" fill="#fff4d6" stroke="#b8963c"/><rect x="92" y="2" width="16" height="40" fill="#00879E"/></svg><p class="mini">바깥지름에 홈(그루브)</p></div>
+    <div class="box"><h4>(d) 원호 바이트</h4><svg viewBox="0 0 200 70" style="width:100%;height:58px"><path d="M10 66 V30 H80 Q100 50 120 30 H190 V66 Z" fill="#fff4d6" stroke="#b8963c"/><circle cx="100" cy="22" r="12" fill="#00879E"/></svg><p class="mini">둥근 홈·원호 모양</p></div>
+    <div class="box hl"><h4>(e) 수나사 바이트</h4><svg viewBox="0 0 200 70" style="width:100%;height:58px"><path d="M10 66 V30 l10 -8 l10 8 l10 -8 l10 8 l10 -8 l10 8 l10 -8 l10 8 H190 V66 Z" fill="#fff4d6" stroke="#b8963c"/><path d="M95 30 l8 -26 h-16z" fill="#00879E"/></svg><p class="mini">바깥에 나사(수나사)</p></div>
+    <div class="box"><h4>(f) 보링 바이트</h4><svg viewBox="0 0 200 70" style="width:100%;height:58px"><path d="M10 10 H190 V66 H10 Z M40 26 H190 V50 H40 Z" fill="#fff4d6" stroke="#b8963c" fill-rule="evenodd"/><rect x="80" y="34" width="110" height="8" fill="#00879E"/></svg><p class="mini">구멍 안지름을 넓힘</p></div>
+    <div class="box"><h4>(g) 내경 홈 바이트</h4><svg viewBox="0 0 200 70" style="width:100%;height:58px"><path d="M10 10 H190 V66 H10 Z M40 26 H190 V50 H40 Z" fill="#fff4d6" stroke="#b8963c" fill-rule="evenodd"/><rect x="90" y="34" width="100" height="8" fill="#00879E"/><rect x="90" y="18" width="10" height="18" fill="#00879E"/></svg><p class="mini">구멍 안쪽에 홈</p></div>
+    <div class="box hl"><h4>(h) 암나사 바이트</h4><svg viewBox="0 0 200 70" style="width:100%;height:58px"><path d="M10 10 H190 V66 H10 Z M40 26 H190 V50 H40 Z" fill="#fff4d6" stroke="#b8963c" fill-rule="evenodd"/><rect x="90" y="34" width="100" height="8" fill="#00879E"/><path d="M95 34 l5 -10 l5 10z" fill="#00879E"/></svg><p class="mini">구멍 안에 나사(암나사)</p></div>
+    <div class="box"><h4>(i) 총형 바이트</h4><svg viewBox="0 0 200 70" style="width:100%;height:58px"><path d="M10 66 V30 H70 Q100 10 130 30 H190 V66 Z" fill="#fff4d6" stroke="#b8963c"/><path d="M70 30 Q100 10 130 30 V10 H70 Z" fill="#00879E"/></svg><p class="mini">날 모양 그대로 형상 복사</p></div>
+  </div>
+  <div class="analogy"><b class="lab">비유</b>바이트는 조각칼 세트와 같다. 평칼(외경), 세모칼(나사), 둥근칼(원호)처럼 칼끝 모양이 곧 깎이는 모양이다.</div>
+  
+</section>
+
+<!-- 나사 용어 -->
+<section class="page" data-title="나사의 용어 (움직이는 그림)">
+  <div class="kicker"><span class="lesson">22차시</span>나사의 용어 <span class="pg">교재 18쪽 2)</span></div>
+  <h2>나사산과 골, 피치와 리드</h2>
+  <div class="cols c46">
+    <div class="col" style="gap:6px">
+      <div class="box"><h4>① 나사산</h4><p class="mini">수나사·암나사 표면에 돌출된 규칙적인 단면의 <b>나선형 돌기</b></p></div>
+      <div class="box hl"><h4>② 피치 (pitch)</h4><p class="mini">축선과 평행하게 잰, <b>서로 인접한</b> 나사산과 나사산(또는 골과 골) 사이의 거리</p></div>
+      <div class="box gd"><h4>③ 리드 (lead)</h4><p class="mini">나사를 <b>한 바퀴</b> 돌릴 때 축 방향으로 나가는 거리. <b>리드 = 줄 수 × 피치</b></p></div>
+      <div class="box"><h4>④ 바깥지름 · ⑤ 골지름</h4><p class="mini">바깥지름: 수나사의 산봉우리(암나사의 골 밑)에 접하는 가상 원통의 지름 — <b>호칭 지름</b><br>골지름: 수나사의 골 밑(암나사의 산봉우리)에 접하는 가상 원통의 지름</p></div>
+    </div>
+    <div class="col">
+      <div class="wbox">
+        <svg id="w-lead" viewBox="0 0 560 270"></svg>
+        <div class="ctrl">줄 수 <button data-ln="1" class="on">1줄</button><button data-ln="2">2줄</button><button data-ln="3">3줄</button><span class="sp"></span>피치 <button data-lp="1">1</button><button data-lp="1.5">1.5</button><button data-lp="2" class="on">2</button><span class="sp"></span>회전각 <input type="range" id="ld-a" min="0" max="720" step="15" value="360" style="width:150px"></div>
+        <div class="readout" id="ld-out"></div>
+      </div>
+      <div class="analogy" style="font-size:15px"><b class="lab">비유</b>피치는 '계단 한 칸의 높이', 리드는 '나선 계단을 한 바퀴 돌았을 때 올라간 높이'이다. 계단이 두 줄로 꼬여 올라가면(2줄 나사) 한 바퀴에 두 칸만큼 올라간다.</div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 간략도·표기·게이지 -->
+<section class="page" data-title="나사의 간략도·표기·게이지">
+  <div class="kicker"><span class="lesson">22차시</span>간략도 · 표기 · 게이지 <span class="pg">교재 18~19쪽 3)~5)</span></div>
+  <h2>도면에서 나사를 읽고, 게이지로 검사한다</h2>
+  <div class="cols">
+    <div class="col">
+      <div class="wbox"><svg viewBox="0 0 460 150">
+        <path d="M30 40 H330 L340 50 V100 L330 110 H30 Z" fill="#fff4d6" stroke="#0F3057" stroke-width="2.5"/>
+        <path d="M150 50 H338 M150 100 H338" stroke="#0F3057" stroke-width="1"/><line x1="150" y1="40" x2="150" y2="110" stroke="#0F3057" stroke-width="2.5"/>
+        <path d="M150 50 L135 40 M150 100 L135 110" stroke="#0F3057" stroke-width="1"/>
+        <line x1="20" y1="75" x2="360" y2="75" stroke="#0F3057" stroke-dasharray="12 3 2 3"/>
+        <text x="245" y="30" text-anchor="middle" font-size="12" fill="#00879E" font-weight="700">완전 나사부</text><text x="140" y="130" text-anchor="middle" font-size="12" fill="#c8423b" font-weight="700">불완전 나사부</text>
+        <text x="390" y="60" font-size="15" fill="#c8423b" font-weight="700">M16</text><text x="390" y="80" font-size="11" fill="#5b6876">미터 보통 나사</text><text x="390" y="96" font-size="11" fill="#5b6876">호칭 16</text>
+      </svg></div>
+      <ul class="tight" style="font-size:15px">
+        <li><b>나사부</b>: 수나사·암나사에 해당하는 부분</li>
+        <li><b>완전 나사부</b>: 산봉우리와 골이 완전한 산 모양 / <b>불완전 나사부</b>: 끝이 불완전한 부분</li>
+        <li>간략도: 산봉우리는 <b>굵은 실선</b>, 골은 <b>가는 실선</b>으로 그린다.</li>
+        <li><b>미터 나사</b> 표기: 보통 나사는 <b>M10</b>(피치 생략), 가는 나사는 <b>M10×1.25</b>(피치 표기)</li>
+      </ul>
+    </div>
+    <div class="col" style="gap:8px">
+      <div class="box hl"><h4>센터 게이지</h4><p class="mini">선반용 <b>나사 절삭 공구(바이트)의 각도 검사</b>. 측정 홈에 나사 바이트를 맞추어 각도(60°)를 확인한다.</p></div>
+      <div class="box"><h4>플러그 게이지 · 링 게이지</h4><p class="mini">플러그 게이지: <b>암나사</b> 측정용 / 링 게이지: <b>수나사</b> 측정용 (통과측·정지측 → Ⅰ단원 5차시)</p></div>
+      <div class="box gd"><h4>나사 측정기</h4><p class="mini">삼침법(유효지름), 나사 마이크로미터, 나사(피치) 게이지, 공구 현미경. <b>다이얼게이지는 나사 측정기가 아니다.</b></p></div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 편심 -->
+<section class="page" data-title="편심 작업과 리드 스크루">
+  <div class="kicker"><span class="lesson">22차시</span>편심 작업 · 리드 스크루 <span class="pg">교재 18쪽 4) · 보충 Ⅲ-5 4)·10)</span></div>
+  <h2>중심을 일부러 비켜 깎는다 — 편심 작업</h2>
+  <div class="cols c46">
+    <div class="col" style="gap:7px">
+      <div class="card t"><p class="mini"><b>편심</b>: 축의 중심과 다른 중심을 가진 원통을 깎는 것(크랭크·캠). 교재 도면의 '2±0.1'은 편심량 2 mm.</p></div>
+      <div class="steps">
+        <div><b>단동척</b>(4개 조가 각각 움직임)에 물리고, 편심량만큼 조를 조정한다.</div>
+        <div>다이얼게이지를 대고 한 바퀴 돌려 <b>바늘 움직임 = 편심량 × 2</b>인지 확인한다.</div>
+        <div>편심된 중심으로 가공한다. 단속 절삭이 되기 쉬우니 절삭 깊이를 작게 한다.</div>
+      </div>
+      <div class="box gd"><h4>범용 선반의 나사 절삭</h4><p class="mini">주축과 <b>리드 스크루</b>를 변환 기어로 연결해 회전비를 맞추면 원하는 피치의 나사가 깎인다. <b>체이싱 다이얼</b>로 하프 너트를 다시 물리는 시점을 맞춘다.</p></div>
+    </div>
+    <div class="col">
+      <div class="wbox"><svg id="w-ecc" viewBox="0 0 460 230"></svg></div>
+      <div class="analogy" style="font-size:15px"><b class="lab">비유</b>회전목마에서 중심을 비켜 앉은 사람은 한 바퀴에 중심 쪽으로 왔다 멀어졌다 한다. 그 움직임의 폭은 비켜 앉은 거리의 두 배이다.</div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 22차시 확인 -->
+<section class="page" data-title="22차시 확인 문제">
+  <div class="kicker"><span class="lesson">22차시</span>확인 문제 <span class="pg">기출 연계</span></div>
+  <h2>22차시 확인 문제</h2>
+  <div class="quiz">
+    <div class="q">1. 수나사의 산봉우리 또는 암나사의 홈 밑에 접하는 가상 원통의 지름은? <span class="gq tonly">기출 1-6</span><br>① 나사산 ② 피치 ③ 골지름 ④ 바깥지름
+      <div class="ox" data-a="4" data-e="바깥지름은 수나사의 산봉우리(암나사의 골 밑)에 접하는 가상 원통의 지름이며 호칭 지름으로 쓴다."><button>①</button><button>②</button><button>③</button><button>④</button></div><div class="fb"></div></div>
+    <div class="q">2. 나사를 한 바퀴 돌릴 때 축 방향으로 나가는 거리는? <span class="gq tonly">교재 3회 19</span><br>① 나사산 ② 피치 ③ 리드 ④ 바깥지름
+      <div class="ox" data-a="3" data-e="리드는 한 바퀴 돌릴 때 축 방향으로 나가는 거리이다. 리드 = 줄 수 × 피치이다."><button>①</button><button>②</button><button>③</button><button>④</button></div><div class="fb"></div></div>
+    <div class="q">3. 범용 선반에서 주축과 변환 기어로 연결해 나사 피치를 맞추는 것은? <span class="gq tonly">기출 3-17</span><br>① 심압대 ② 리드 스크루 ③ 백래시 제거 장치 ④ 체이싱 다이얼
+      <div class="ox" data-a="2" data-e="리드 스크루는 주축과 변환 기어로 연결되어 회전비를 맞추면 원하는 피치의 나사가 깎인다. 체이싱 다이얼은 하프 너트를 다시 물리는 시점을 맞춘다."><button>①</button><button>②</button><button>③</button><button>④</button></div><div class="fb"></div></div>
+    <div class="q">4. 플러그 게이지는 수나사 측정용이다.
+      <div class="ox" data-a="2" data-e="플러그 게이지는 구멍에 끼우므로 암나사 측정용이다. 수나사는 링 게이지로 잰다. 그래서 X이다."><button>O</button><button>X</button></div><div class="fb"></div></div>
+    <div class="q">5. 피치 1 mm 2줄 나사를 270° 돌렸을 때 이동량[mm]은? <span class="gq tonly">학생 기출</span>
+      <button>정답 보기</button><div class="ans">리드 2 × 270/360 = 1.5 mm</div></div>
+    <div class="q">6. 선반용 나사 바이트의 각도를 검사하는 게이지는?
+      <button>정답 보기</button><div class="ans">센터 게이지 — 나사 바이트를 측정 홈에 맞추어 날 각도(미터 나사 60°)를 검사한다.</div></div>
+  </div>
+  <div class="oneline" style="margin-top:auto"><b>정리</b>피치 = 이웃 산 사이 · 리드 = 줄 수 × 피치 · 이동량 = 리드 × 각도/360 · 바깥지름 = 호칭 · 플러그 = 암나사, 링 = 수나사 · 편심 읽음 = 2e</div>
+  
+</section>
+
+<!-- 23차시 표지 -->
+<section class="page sec-cover" data-title="23차시 · 탭·드릴·보링 가공">
+  <div class="num">23</div>
+  <h1>탭·드릴·보링 가공</h1>
+  <div class="sub">드릴링·태핑·리밍·보링·카운터 보링·스폿 페이싱·카운터 싱킹<br>드릴의 구조(날끝각 118°) / 탭의 종류와 칩 배출 / 기초 드릴 지름 = 호칭 − 피치</div>
+  
+</section>
+
+<!-- 구멍 가공 종류 -->
+<section class="page" data-title="구멍 가공의 종류 (움직이는 그림)">
+  <div class="kicker"><span class="lesson">23차시</span>구멍 가공 공구 선정 <span class="pg">교재 20쪽 1)</span></div>
+  <h2>뚫고, 다듬고, 넓히고, 자리를 판다</h2>
+  <div class="cols c46">
+    <div class="col" style="gap:5px">
+      <div class="box"><h4>① 드릴링</h4><p class="mini">드릴을 회전시키며 축 방향으로 이송하여 구멍을 뚫는다.</p></div>
+      <div class="box"><h4>② 태핑</h4><p class="mini">드릴로 뚫은 구멍에 탭으로 <b>암나사</b>를 낸다.</p></div>
+      <div class="box hl"><h4>③ 리밍</h4><p class="mini">드릴 구멍을 리머로 <b>정밀하게 다듬질</b>한다.</p></div>
+      <div class="box"><h4>④ 보링</h4><p class="mini">가공된 구멍을 보링 공구로 <b>넓힌다</b>.</p></div>
+      <div class="box gd"><h4>⑤ 카운터 보링 · ⑥ 스폿 페이싱 · ⑦ 카운터 싱킹</h4><p class="mini">⑤ 볼트·작은 나사 머리를 <b>묻히게</b>(원통) / ⑥ 주물면 등에 볼트 <b>자리 파기</b>(깊이 얕음) / ⑦ 접시머리 볼트를 묻히게 <b>접시형</b>(원추)</p></div>
+    </div>
+    <div class="col">
+      <div class="wbox">
+        <svg id="w-holes" viewBox="0 0 560 270"></svg>
+        <div class="ctrl"><button data-ho="dr" class="on">드릴링</button><button data-ho="tap">태핑</button><button data-ho="rm">리밍</button><button data-ho="bo">보링</button><button data-ho="cb">카운터 보링</button><button data-ho="sf">스폿 페이싱</button><button data-ho="cs">카운터 싱킹</button><span class="sp"></span><button data-play class="on">정지</button></div>
+        <div class="readout" id="ho-out"></div>
+      </div>
+      <div class="analogy" style="font-size:15px"><b class="lab">비유</b>벽에 액자를 걸 때 먼저 구멍을 뚫고(드릴링), 쓰임에 따라 구멍을 매끄럽게 다듬거나(리밍) 나사 홈을 내고(태핑), 나사 머리가 튀어나오지 않게 자리를 파는(카운터 보링·싱킹) 것과 같다. 리밍과 태핑은 목적이 다른 작업이다.</div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 드릴 구조 -->
+<section class="page" data-title="드릴의 구조 (움직이는 그림)">
+  <div class="kicker"><span class="lesson">23차시</span>드릴의 구조 <span class="pg">교재 20쪽 2) · 보충</span></div>
+  <h2>드릴 각부 이름과 날끝각 118°</h2>
+  <div class="cols c64">
+    <div class="col">
+      <div class="wbox">
+        <svg id="w-drill" viewBox="0 0 640 250"></svg>
+        <div class="ctrl" style="gap:5px"><button data-dp="tip" class="on">날끝각</button><button data-dp="lip">절삭날</button><button data-dp="chisel">치즐 에지</button><button data-dp="flute">홈</button><button data-dp="margin">마진</button><button data-dp="body">몸체</button><button data-dp="shank">자루</button><button data-dp="tang">탱</button></div>
+        <div class="readout" id="dp-out"></div>
+      </div>
+    </div>
+    <div class="col" style="gap:8px">
+      <div class="formula" style="font-size:20px">표준 날끝각 118°<br><span style="font-size:14px">여유각 12~15°</span></div>
+      <div class="box"><h4>자루의 종류</h4><p class="mini"><b>곧은 자루</b>: 작은 지름, 드릴 척에 물림 / <b>테이퍼 자루</b>: 큰 지름, 모스 테이퍼로 주축에 직접 끼우고 뺄 때는 드리프트(쐐기)로 끝의 <b>탱</b>을 밀어 빼낸다.</p></div>
+      <div class="analogy" style="font-size:15px"><b class="lab">비유</b>드릴의 홈은 '빗물 홈통'이다. 날이 깎은 칩이 홈을 따라 구멍 밖으로 흘러나온다. 깊은 구멍에서는 홈이 막히므로 펙(G83)으로 칩을 빼 준다.</div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 탭 -->
+<section class="page" data-title="탭의 종류와 칩 배출 (움직이는 그림)">
+  <div class="kicker"><span class="lesson">23차시</span>탭의 종류 <span class="pg">교재 20쪽 3) · 13쪽 ⑧</span></div>
+  <h2>칩을 어디로 보내는가 — 탭의 종류</h2>
+  <div class="cols c46">
+    <div class="col" style="gap:5px">
+      <div class="box"><h4>① 핸드 탭</h4><p class="mini">수작업용. 직선 홈, 나사 길이가 짧다. 날 끝 강도가 크고 재연삭이 쉽다. 보통 1번(황)·2번(중)·3번(정) 3개 한 조</p></div>
+      <div class="box hl"><h4>② 스파이럴 탭</h4><p class="mini">비틀림 홈으로 칩이 <b>위로</b> 나온다 → <b>막힌 구멍</b>에 알맞다(끝의 챔퍼 부분은 완전 나사가 되지 않는다). 연속 칩 재료에 적합</p></div>
+      <div class="box gd"><h4>③ 포인트 탭</h4><p class="mini">칩이 구멍 <b>아래로</b> 밀려 나간다 → <b>관통 구멍</b>. 고속 가공, 파손 강도가 높다</p></div>
+      <div class="box"><h4>④ 전조 탭</h4><p class="mini">소재를 변형시켜 나사산을 <b>성형</b> → <b>칩이 없고 홈도 없다</b>. 알맞은 조건에서는 절삭 탭보다 <b>수명이 길다</b>(얼마나 긴지는 재료·윤활·가공 조건에 따라 다르다). 연성 재질에 적합</p></div>
+      <div class="box"><h4>⑤ 파이프 탭</h4><p class="mini">관용 테이퍼 나사 PT, 관용 평행 나사 PS(교재·시험 표기. 현행 KS는 테이퍼 R·Rc·Rp, 평행 G)</p></div>
+    </div>
+    <div class="col">
+      <div class="wbox">
+        <svg id="w-taps" viewBox="0 0 560 260"></svg>
+        <div class="ctrl"><button data-tt="sp" class="on">스파이럴 탭</button><button data-tt="pt">포인트 탭</button><button data-tt="rl">전조 탭</button><span class="sp"></span><button data-play class="on">정지</button></div>
+        <div class="readout" id="tt-out"></div>
+      </div>
+      <div class="card t"><p class="mini"><b>기초 드릴 지름 ≒ 호칭 지름 − 피치</b> &nbsp; M10×1.5 → 8.5 mm · M8×1.25 → 6.75 mm<br>이 식은 간편식이다. 실제로는 암나사 안지름의 허용 범위 안에서 고른다(M10×1.5는 약 8.38~8.68 mm라서 8.6도 쓴다).<br>탭 이송(머시닝센터) F = 피치 × N</p></div>
+      <div class="supp" style="margin-top:10px"><span class="chk">교재 바로잡기</span> 교재 20쪽 전조 탭의 '10배 이상'은 조건에 따라 다르므로 단정하지 않는다. 파이프 탭의 '가곡용'은 '가공용'의 오기이다.</div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 23차시 확인 -->
+<section class="page" data-title="23차시 확인 문제">
+  <div class="kicker"><span class="lesson">23차시</span>확인 문제 <span class="pg">기출 연계</span></div>
+  <h2>23차시 확인 문제</h2>
+  <div class="quiz">
+    <div class="q">1. 뚫려 있는 구멍의 정밀도와 표면 거칠기를 좋게 하는 공구는? <span class="gq tonly">기출 5-6</span><br>① 줄 ② 리머 ③ 더브테일 ④ 카운터 보어
+      <div class="ox" data-a="2" data-e="리머는 드릴로 뚫은 구멍을 정밀하게 다듬질해 치수 정밀도와 표면 거칠기를 좋게 한다."><button>①</button><button>②</button><button>③</button><button>④</button></div><div class="fb"></div></div>
+    <div class="q">2. M10×1.5 탭을 가공하기 위한 기초 드릴 치수[mm]로 가장 알맞은 것은? <span class="gq tonly">기출 3-30</span><br>① 8 ② 8.6 ③ 9.6 ④ 10
+      <div class="ox" data-a="2" data-e="간편식으로 기초 드릴 = 호칭 지름 − 피치 = 10 − 1.5 = 8.5 mm이다. 보기에 8.5가 없고, 8.6은 M10×1.5 암나사 안지름 허용 범위(약 8.38~8.68 mm) 안의 실제 값이므로 ②가 정답이다."><button>①</button><button>②</button><button>③</button><button>④</button></div><div class="fb"></div></div>
+    <div class="q">3. 칩이 구멍 밑으로 배출되어 관통 구멍에 쓰는 탭은? <span class="gq tonly">교재 3회 23</span><br>① 스파이럴 탭 ② 전조 탭 ③ 파이프 탭 ④ 포인트 탭
+      <div class="ox" data-a="4" data-e="포인트 탭은 칩을 구멍 아래(진행 방향)로 밀어내므로 관통 구멍에 쓴다. 스파이럴 탭은 칩을 위로 빼내 막힌 구멍에 쓴다."><button>①</button><button>②</button><button>③</button><button>④</button></div><div class="fb"></div></div>
+    <div class="q">4. 보링은 가공된 구멍을 넓히는 작업이다. <span class="gq tonly">학생 기출</span>
+      <div class="ox" data-a="1" data-e="보링은 이미 뚫린 구멍을 보링 공구로 넓히거나 정밀하게 다듬는 작업이다. 그래서 O이다."><button>O</button><button>X</button></div><div class="fb"></div></div>
+    <div class="q">5. 드릴의 표준 날끝각은?
+      <button>정답 보기</button><div class="ans">118°</div></div>
+    <div class="q">6. 칩을 배출하지 않아 날 부위에 홈이 없는 탭은?
+      <button>정답 보기</button><div class="ans">전조 탭 — 소재를 눌러 나사산을 성형하므로 칩이 나오지 않아 칩 홈이 필요 없다.</div></div>
+  </div>
+  <div class="oneline" style="margin-top:auto"><b>정리</b>리밍 = 정밀 다듬질, 보링 = 넓힘 · 보어 원통·싱크 원추·스폿 얕게 · 날끝각 118° · 스파이럴 위·포인트 아래·전조 칩 없음 · 기초 드릴 = 호칭 − 피치</div>
+  
+</section>
+
+<!-- 24차시 표지 -->
+<section class="page sec-cover" data-title="24차시 · 공구 마모·수명·칩·절삭유·인서트">
+  <div class="num">24</div>
+  <h1>공구 마모·수명·칩·절삭유·인서트</h1>
+  <div class="sub">크레이터 마모·플랭크 마모·치핑과 해결 방안 / 공구 수명과 판정 기준, 박리·절손<br>칩의 기본 형태 4가지 / 절삭유의 목적, 공구 재료의 구비 조건 / 인서트 ISO 표기 / 선반 절삭량</div>
+  
+</section>
+
+<!-- 공구 마모 -->
+<section class="page" data-title="공구 마모 3가지 (움직이는 그림)">
+  <div class="kicker"><span class="lesson">24차시</span>공구의 마모 <span class="pg">교재 19쪽 6)</span></div>
+  <h2>어디가 닳았는가 — 크레이터·플랭크·치핑</h2>
+  <div class="cols c46">
+    <div class="col" style="gap:6px">
+      <div class="box hl"><h4>① 크레이터 마모 (경사면)</h4><p class="mini">칩과 공구 <b>윗면 경사면</b>의 마찰로 경사면이 <b>분화구처럼 오목하게</b> 파이는 현상. 처음에는 느리게 자라다가 어느 크기가 되면 빨리 자란다. <b>공구 수명을 좌우하는 주요 요인</b>이다.</p></div>
+      <div class="box gd"><h4>② 플랭크 마모 (여유면)</h4><p class="mini"><span class="chk">교재 바로잡기</span> 교재 19쪽 '프랭크'는 플랭크(flank). 공구 <b>여유면</b>과 공작물 절삭면의 마찰로 여유면에 <b>평행하게</b> 닳는 현상. 치수 정밀도와 가공면이 나빠진다.</p></div>
+      <div class="box"><h4>③ 치핑 (날 끝 결손)</h4><p class="mini">날 끝(인선)이 <b>충격</b>을 받아 일부가 <b>미세하게 떨어져 나가는</b> 현상. 단속 절삭·진동·강한 충격으로 절삭 저항의 변화가 클 때 생긴다.</p></div>
+      <div class="analogy" style="font-size:15px"><b class="lab">비유</b>지우개로 생각하면 크레이터는 '윗면이 움푹 팬 것', 플랭크는 '옆면이 비스듬히 닳은 것', 치핑은 '모서리가 톡 떨어진 것'이다.</div>
+    </div>
+    <div class="col">
+      <div class="wbox">
+        <svg id="w-wear" viewBox="0 0 560 250"></svg>
+        <div class="ctrl"><button data-wr="crater" class="on">크레이터 마모</button><button data-wr="flank">플랭크 마모</button><button data-wr="chip">치핑</button><span class="sp"></span><button data-play class="on">정지</button></div>
+        <div class="readout" id="wr-out"></div>
+      </div>
+      <div class="card t" style="padding:10px 14px"><p class="mini" id="wr-sol" style="line-height:1.55"></p></div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 공구 수명·손상 -->
+<section class="page" data-title="공구 수명과 손상 · 분류 활동">
+  <div class="kicker"><span class="lesson">24차시</span>공구 수명 · 박리 · 절손 <span class="pg">보충 Ⅲ-5 5)</span></div>
+  <h2>공구는 언제 바꾸는가 — 공구 수명</h2>
+  <div class="cols c46">
+    <div class="col" style="gap:6px">
+      <div class="formula" style="font-size:18px;text-align:left;line-height:1.5"><b>공구 수명(공구 수명 시간)</b>: 새 공구로 일정한 절삭 조건에서 절삭을 시작하여 공구를 <b>교환하거나 재연삭</b>할 때까지의 <b>실제 절삭 시간의 합</b></div>
+      <div class="box"><h4>수명 판정 기준</h4><p class="mini">마모량 · 가공면 거칠기 악화 · 치수 변화 · 절삭 저항(절삭 동력) 증가 · 사용 시간 → <b>절삭유 온도는 기준이 아니다</b></p></div>
+      <div class="box hl"><h4>박리</h4><p class="mini">공구 표면(코팅층 등)이 <b>얇게 떨어져 나가는</b> 현상. 날 끝이 떨어지는 치핑과 구분한다.</p></div>
+      <div class="box gd"><h4>절손(공구가 부러짐)의 원인</h4><p class="mini">절입량 과다 · 이송 속도 과다 · 날 마모가 심함 · 공구 <b>돌출량 과다</b>(길게 물림). 돌출량이 <b>적은 것</b>은 원인이 아니다.</p></div>
+      <div class="analogy" style="font-size:15px"><b class="lab">비유</b>연필을 길게 빼서 세게 누르면 심이 부러진다. 공구도 공구대·홀더에서 길게 나올수록 휘고 떨려 부러지기 쉽다.</div>
+    </div>
+    <div class="col">
+      <div class="ctrl" style="font-size:16px">먼저 종류를 고르고 → 아래 항목을 누른다:
+        <span class="sp"></span><button data-lf="1" class="on">수명 판정 기준이다</button><button data-lf="2">아니다</button></div>
+      <div class="sortq" id="sort24" style="margin-top:6px">
+        <button data-c="1">플랭크 마모 폭이 0.3 mm를 넘었다</button>
+        <button data-c="2">절삭유 탱크의 온도가 올라갔다</button>
+        <button data-c="1">같은 프로그램인데 지름이 0.03 mm 커졌다</button>
+        <button data-c="1">가공면이 거칠어지고 광택이 사라졌다</button>
+        <button data-c="1">주축 부하(절삭 동력)가 평소보다 크게 나온다</button>
+        <button data-c="2">작업장 실내 온도가 낮다</button>
+        <button data-c="1">정해 둔 사용 시간(절삭 시간 합계)이 다 되었다</button>
+        <button data-c="2">공구 돌출량을 짧게 물렸다</button>
+      </div>
+      <div class="ctrl" style="margin-top:8px"><button id="sort24-chk">채점하기</button><button id="sort24-rst">다시 하기</button><span class="readout" id="sort24-out" style="margin-left:10px"></span></div>
+      <div class="legend"><span><i style="background:#00879E"></i>판정 기준</span><span><i style="background:#FFC145"></i>아니다</span><span><i style="background:#fbe3e1;border:1px solid #c8423b"></i>틀림</span></div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 칩의 형태 -->
+<section class="page" data-title="칩의 기본 형태 (움직이는 그림)">
+  <div class="kicker"><span class="lesson">24차시</span>칩의 형태 <span class="pg">보충 Ⅲ-5 6)</span></div>
+  <h2>재료와 조건에 따라 칩이 달라진다</h2>
+  <div class="cols c46">
+    <div class="col" style="gap:5px">
+      <div class="box hl"><h4>① 유동형 칩</h4><p class="mini">연성 재료를 <b>경사각 크게, 절삭 속도 빠르게</b> 깎을 때 끊어지지 않고 연속으로 흘러 나온다. <b>가공면이 가장 좋다</b>.</p></div>
+      <div class="box"><h4>② 전단형 칩</h4><p class="mini">연성 재료를 경사각을 작게, 절삭 깊이를 크게 할 때 미끄러지듯 잘려 나온다.</p></div>
+      <div class="box gd"><h4>③ 열단형(경작형) 칩</h4><p class="mini"><b>점성이 큰</b> 재료를 경사각 작게, <b>저속</b>으로 깎을 때 뜯기듯 나온다. 가공면이 거칠다.</p></div>
+      <div class="box"><h4>④ 균열형 칩</h4><p class="mini"><b>주철</b> 같은 취성(잘 깨지는) 재료에서 잘게 부서져 나온다.</p></div>
+      <div class="card t" style="padding:8px 12px"><p class="mini"><b>칩 브레이커·칩 브레이킹</b>: 유동형 칩은 길게 이어져 공작물·공구에 감기므로, 인서트의 칩 브레이커로 칩을 짧게 끊어 처리한다.</p></div>
+    </div>
+    <div class="col">
+      <div class="wbox">
+        <svg id="w-chip" viewBox="0 0 560 250"></svg>
+        <div class="ctrl" style="gap:4px">재료 <button data-cm="duct" class="on">연성(강)</button><button data-cm="visc">점성 큼</button><button data-cm="brit">취성(주철)</button></div>
+        <div class="ctrl" style="gap:4px">경사각 <button data-cr="big" class="on">크게</button><button data-cr="small">작게</button><span class="sp"></span>절삭 속도 <button data-cv="fast" class="on">빠르게</button><button data-cv="slow">느리게</button><span class="sp"></span><button data-play class="on">정지</button></div>
+        <div class="readout" id="cp-out"></div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 절삭유·공구 재료 -->
+<section class="page" data-title="절삭유와 공구 재료">
+  <div class="kicker"><span class="lesson">24차시</span>절삭유 · 공구 재료 <span class="pg">보충 Ⅲ-5 7)·8)</span></div>
+  <h2>공구를 오래 쓰려면 — 절삭유와 공구 재료</h2>
+  <div class="cols">
+    <div class="col" style="gap:8px">
+      <h3 style="margin:0">절삭유의 사용 목적</h3>
+      <div class="grid2">
+        <div class="box hl"><h4>냉각</h4><p class="mini">공구와 공작물의 열을 식혀 공구 수명을 늘리고 열팽창에 의한 치수 오차를 줄인다.</p></div>
+        <div class="box hl"><h4>윤활</h4><p class="mini">공구와 칩·공작물 사이의 마찰을 줄인다.</p></div>
+        <div class="box hl"><h4>세척(칩 제거)</h4><p class="mini">칩을 씻어 내어 가공 부위에서 치운다.</p></div>
+        <div class="box hl"><h4>방청</h4><p class="mini">가공면과 기계가 녹스는 것을 막는다.</p></div>
+      </div>
+      <div class="analogy" style="font-size:15px"><b class="lab">비유</b>톱질할 때 물을 뿌리면 날이 덜 뜨거워지고(냉각), 덜 뻑뻑하며(윤활), 톱밥이 씻겨 나간다(세척).</div>
+      <p class="mini" style="margin:0">머시닝센터 절삭유 켜기 <b>M08</b>, 끄기 <b>M09</b></p>
+    </div>
+    <div class="col" style="gap:8px">
+      <h3 style="margin:0">절삭 공구 재료의 구비 조건</h3>
+      <div class="steps">
+        <div class="hl"><b>고온 경도</b>가 높을 것 — 뜨거워져도 단단해야 한다</div>
+        <div><b>내마모성(내마멸성)</b>이 높을 것 — 잘 닳지 않아야 한다</div>
+        <div><b>인성</b>이 클 것 — 충격에 깨지지 않아야 한다</div>
+        <div>가공이 쉽고 <b>값이 쌀 것</b></div>
+      </div>
+      <div class="box gd"><h4>고속도강 18-4-1 (SKH2)</h4><p class="mini">표준 고속도강(HSS). 시험에는 'SKH 18-4-1'로 나왔다. <b>W 18 % · Cr 4 % · V 1 %</b>. 드릴·탭·엔드밀 등에 쓴다. 더 빠른 절삭에는 초경합금 인서트를 쓴다.</p></div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 인서트 표기 -->
+<section class="page" data-title="인서트 ISO 표기 해독 (움직이는 그림)">
+  <div class="kicker"><span class="lesson">24차시</span>인서트 표기 <span class="pg">보충 Ⅲ-5 1)</span></div>
+  <h2>CNMG120408 — 글자 하나하나에 뜻이 있다</h2>
+  <div class="col" style="gap:8px">
+      <div class="wbox">
+        <svg id="w-insert" viewBox="0 0 760 290" style="max-height:470px"></svg>
+        <div class="ctrl" style="gap:5px"><button data-in="CNMG120408" class="on">CNMG120408</button><button data-in="DNMG150604">DNMG150604</button><button data-in="VBMT160404">VBMT160404</button><button data-in="TNMG160408">TNMG160408</button><button data-in="SNMG120412">SNMG120412</button><button data-in="WNMG080408">WNMG080408</button><button data-in="RCMX1204M0">RCMX1204M0</button></div>
+        <div class="readout" id="in-out"></div>
+      </div>
+      <div class="oneline"><b>외울 것</b>형상 C 80° · D 55° · V 35° · S □ · T △ · W 80° 삼각 · R ○ · H 육각 / 여유각 N 0° · B 5° · C 7° · P 11° / 코너 R 04 = 0.4 · 08 = 0.8 · 12 = 1.2 — <b>CNMG의 N은 칩 브레이커가 아니라 여유각 0°</b></div>
+  </div>
+  
+</section>
+
+<!-- 선반 절삭량 -->
+<section class="page" data-title="선반 절삭량과 이송">
+  <div class="kicker"><span class="lesson">24차시</span>선반 절삭량 <span class="pg">보충 Ⅲ-5 9)</span></div>
+  <h2>1분에 얼마나 깎는가 — Q = v × f × t</h2>
+  <div class="cols">
+    <div class="col" style="gap:8px">
+      <div class="formula">Q [cm³/min] = v [m/min] × f [mm/rev] × t [mm]</div>
+      <div class="box"><h4>기호</h4><p class="mini">v 절삭 속도 · f 1회전당 이송 · t 절삭 깊이. 단위가 m × mm × mm = 1000 mm³ = <b>1 cm³</b>이므로 곱한 값이 그대로 cm³/min이 된다.</p></div>
+      <div class="card t"><p class="mini"><b>기출 1-40 풀이</b> Q = 40 cm³/min, v = 100 m/min, t = 1.5 mm<br>f = Q ÷ (v × t) = 40 ÷ (100 × 1.5) ≒ <b>0.27 mm/rev</b><br>(문제의 노즈 반지름 0.4 mm는 계산에 쓰지 않는다. 문제지에는 'Q는 40min'으로 단위가 깨져 있어 40 cm³/min으로 본다)</p></div>
+      <div class="analogy" style="font-size:15px"><b class="lab">비유</b>대패질에서 대패를 미는 빠르기(v), 한 번에 옆으로 옮기는 폭(f), 깎는 두께(t)를 곱하면 1분 동안 나온 대팻밥의 부피가 된다.</div>
+    </div>
+    <div class="col" style="gap:8px">
+      <div class="wbox">
+        <div class="drill">v <input id="qv-v" value="100" style="width:70px"> m/min × f <input id="qv-f" value="0.2" style="width:70px"> mm/rev × t <input id="qv-t" value="1.5" style="width:70px"> mm</div>
+        <div class="readout" id="qv-out"></div>
+        <div class="drill">연습: <span id="qv-q" style="font-weight:700;color:#0F3057"></span></div>
+        <div class="drill">답 <input id="qv-in" placeholder="예: 0.25"> <button id="qv-chk">확인</button><button class="sub" id="qv-new">새 문제</button><button class="sub" id="qv-show">정답 보기</button></div>
+        <div class="readout" id="qv-fb"></div>
+      </div>
+      <div class="card"><p class="mini">함께 기억할 선반 공식: 회전수 <b>N = 1000V ÷ (πD)</b> · 절삭 속도 <b>V = πDN ÷ 1000</b> (Ⅲ단원 16차시)</p></div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 24차시 확인 -->
+<section class="page" data-title="24차시 확인 문제">
+  <div class="kicker"><span class="lesson">24차시</span>확인 문제 <span class="pg">기출 연계</span></div>
+  <h2>24차시 확인 문제</h2>
+  <div class="quiz">
+    <div class="q">1. 공구 마모에서 공구 경사면이 오목하게 파이는 현상은? <span class="gq tonly">기출 4-26</span><br>① 치핑 ② 피로 파손 ③ 플랭크 마모 ④ 크레이터 마모
+      <div class="ox" data-a="4" data-e="크레이터 마모는 칩이 스치는 경사면이 분화구처럼 오목하게 파이는 것이다. 플랭크 마모는 여유면, 치핑은 날 끝이 떨어져 나가는 것이다."><button>①</button><button>②</button><button>③</button><button>④</button></div><div class="fb"></div></div>
+    <div class="q">2. 공구 수명 판정 기준으로 옳지 않은 것은? <span class="gq tonly">기출 2-19</span><br>① 사용 시간 ② 절삭 동력 ③ 마모량 ④ 절삭유 온도
+      <div class="ox" data-a="4" data-e="공구 수명 판정 기준은 마모량, 가공면 거칠기, 치수 변화, 절삭 동력(저항) 증가, 사용 시간이다. 절삭유 온도는 기준이 아니다."><button>①</button><button>②</button><button>③</button><button>④</button></div><div class="fb"></div></div>
+    <div class="q">3. 공구의 절손 원인으로 보기 어려운 것은? <span class="gq tonly">기출 4-29</span><br>① 절입량이 많다 ② 돌출량이 적다 ③ 이송 속도가 빠르다 ④ 날의 마모가 심하다
+      <div class="ox" data-a="2" data-e="공구는 돌출량이 많을(길게 물릴) 때 휘고 떨려 부러지기 쉽다. 돌출량이 적은 것은 절손 원인이 아니다."><button>①</button><button>②</button><button>③</button><button>④</button></div><div class="fb"></div></div>
+    <div class="q">4. 칩의 기본 형태가 아닌 것은? <span class="gq tonly">기출 4-19</span><br>① 유동형 ② 전단형 ③ 열단형 ④ 비산형
+      <div class="ox" data-a="4" data-e="칩의 기본 형태는 유동형·전단형·열단형(경작형)·균열형 4가지이다. 비산형은 없다."><button>①</button><button>②</button><button>③</button><button>④</button></div><div class="fb"></div></div>
+    <div class="q">5. 인서트 CNMG120408의 N은 칩 브레이커 형태를 뜻한다. <span class="gq tonly">학생 기출</span>
+      <div class="ox" data-a="2" data-e="CNMG의 두 번째 글자 N은 여유각 0°이다. 칩 브레이커와 구멍 형태는 네 번째 글자 G가 나타낸다. 그래서 X이다."><button>O</button><button>X</button></div><div class="fb"></div></div>
+    <div class="q">6. 경사각과 절삭 속도가 크고 점성이 있는 연한 재료를 깎을 때 생기는 칩은? <span class="gq tonly">기출 4-34</span>
+      <button>정답 보기</button><div class="ans">유동형 칩 <span class="chk tonly">정답 확인</span></div></div>
+    <div class="q">7. 절삭유의 사용 목적 3가지를 쓰시오. <span class="gq tonly">기출 2-34</span>
+      <button>정답 보기</button><div class="ans">냉각, 윤활, 세척(칩 제거) — 방청도 맞다</div></div>
+    <div class="q">8. 인서트 표기에서 08이 뜻하는 것은? <span class="gq tonly">교재 9회 12</span>
+      <button>정답 보기</button><div class="ans">코너 반지름 0.8 mm</div></div>
+  </div>
+  <div class="oneline" style="margin-top:auto"><b>정리</b>크레이터 = 경사면 오목 · 플랭크 = 여유면 · 치핑 = 날 끝 탈락 · 박리 = 표피 · 수명 = 실제 절삭 시간 합 · 유동·전단·열단·균열 · 냉각·윤활·세척·방청 · N = 여유각 0° · 08 = R0.8</div>
+  
+</section>
+
+<!-- 25차시 표지 -->
+<section class="page sec-cover" data-title="25차시 · 기출 실전(미니 모의고사)">
+  <div class="num">25</div>
+  <h1>기출 실전 — 미니 모의고사</h1>
+  <div class="sub">외부평가 1차 지필의 형식과 답안 작성 요령<br>기출 30문항 미니 모의고사(진위 · 연결 · 4지택일 · 단답 · 계산) / 정답표를 바로잡아야 하는 문항</div>
+  
+</section>
+
+<!-- 지필 형식 -->
+<section class="page" data-title="지필평가 형식과 답안 요령">
+  <div class="kicker"><span class="lesson">25차시</span>외부평가 1차 지필 <span class="pg">90분 · 40문항 · 100점</span></div>
+  <h2>문항 유형을 알면 실수가 줄어든다</h2>
+  <div class="cols c64">
+    <div class="col" style="gap:8px">
+      <table class="t" style="font-size:15px">
+        <tr><th style="width:80px">번호</th><th style="width:90px">유형</th><th style="width:70px">배점</th><th>답안 작성 요령</th></tr>
+        <tr><td class="c">1~2</td><td class="c">진위형</td><td class="c">2점</td><td>문장 전체가 맞아야 O이다. '항상·반드시·만' 같은 말을 확인한다.</td></tr>
+        <tr><td class="c">3~5</td><td class="c">연결형</td><td class="c">2점</td><td>네 쌍을 모두 맞게 연결해야 한다. 확실한 것부터 연결하고 남은 것을 맞춘다.</td></tr>
+        <tr><td class="c">6~30</td><td class="c">4지택일</td><td class="c">2점</td><td>'옳지 않은 것·아닌 것'에 밑줄을 긋고 푼다.</td></tr>
+        <tr><td class="c">31~38</td><td class="c">단답형</td><td class="c">4점</td><td>정확한 용어로 쓴다(예: 크레이터 마모, G97). '3가지 쓰기'는 <b>쓴 순서대로 3번째까지만</b> 채점하고 부분 점수가 없다(문제지 안내).</td></tr>
+        <tr><td class="c">39~40</td><td class="c">계산형</td><td class="c">4점</td><td>공식 → 대입 → 답과 <b>단위</b>를 쓴다. 문제가 요구한 단위(m/min, mm/min)를 다시 본다.</td></tr>
+      </table>
+      <div class="oneline"><b>점수 감각</b>주관식 1문항(4점) = 객관식 2문항. 객관식 30문항 60점 + 주관식 10문항 40점</div>
+    </div>
+    <div class="col" style="gap:8px">
+      <div class="box hl"><h4>90분 시간 배분(권장)</h4><p class="mini">객관식 30문항 40분 → 주관식 10문항 30분 → 검토 20분. 계산형은 마지막에 검산한다.</p></div>
+      <div class="box gd"><h4>자주 하는 실수</h4><p class="mini">· 2-40: 답을 125로 쓰고 단위 m/min을 놓침(0.125 m/min)<br>· 1-40: 쓰지 않는 노즈 반지름을 계산에 넣음<br>· 3-30: 8.5를 찾다가 당황함(8.6도 암나사 허용 범위 안의 기초 구멍 값)</p></div>
+      <div class="analogy" style="font-size:15px"><b class="lab">비유</b>시험지는 지도와 같다. 먼저 전체를 훑어 쉬운 길(아는 문항)로 점수를 모으고, 험한 길(계산·모르는 용어)은 나중에 간다.</div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 미니 모의고사 -->
+<section class="page" data-title="미니 모의고사 30문항 (풀기)">
+  <div class="kicker"><span class="lesson">25차시</span>미니 모의고사 <span class="pg">기우제반 기출 1~5회에서 30문항</span></div>
+  <h2>지금 몇 점인가 — 기출 30문항</h2>
+  <div class="cols c64">
+    <div class="col">
+      <div class="wbox mk" id="mk-box" style="min-height:470px">
+        <div id="mk-head"></div>
+        <div id="mk-q"></div>
+        <div id="mk-opts"></div>
+        <div id="mk-fb"></div>
+        <div class="ctrl" style="margin-top:auto"><button id="mk-prev">이전 문항</button><button id="mk-next">다음 문항</button><span class="sp"></span><button id="mk-end">채점 결과 보기</button><button id="mk-reset">처음부터</button></div>
+      </div>
+    </div>
+    <div class="col" style="gap:8px">
+      <div class="mk-grid" id="mk-grid"></div>
+      <div class="legend"><span><i style="background:#00879E"></i>맞음</span><span><i style="background:#fbe3e1;border:1px solid #c8423b"></i>틀림</span><span><i style="background:#fff;border:1px solid #0F3057"></i>안 품</span></div>
+      <div class="readout" id="mk-score"></div>
+      <div class="card"><p class="mini">객관식(1~22번) 2점, 주관식(23~30번) 4점, 76점 만점이다. 결과에서 100점 기준으로 바꾼 점수도 보여 준다. 처음 고른 답이 기록되며, 고르면 바로 정답과 해설이 나온다.</p></div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 정답 확인 문항 -->
+<section class="page" data-title="정답표를 바로잡아야 하는 기출 3문항">
+  <div class="kicker"><span class="lesson">25차시</span>기출 정답 확인 <span class="pg">기우제반 정답표와 다른 문항</span></div>
+  <h2>정답표도 틀릴 수 있다 — 근거로 확인한다</h2>
+  <div class="grid3" style="gap:10px">
+    <div class="box"><h4>버니어 최소 눈금 <span class="gq tonly">기출 4-14</span></h4><p class="mini">"12 mm를 25등분한 버니어캘리퍼스의 최소 눈금은?"<br>정답표 ④ 0.04 → <b>② 0.02</b></p><p class="mini">12 mm를 25등분하려면 어미자 1눈금이 0.5 mm(12 mm = 24눈금)이다. 최소 눈금 = 어미자 1눈금 ÷ 등분 수 = 0.5 ÷ 25 = <b>0.02 mm</b></p></div>
+    <div class="box"><h4>전개 번호 사이클 <span class="gq tonly">기출 3-26</span></h4><p class="mini">"프로그램 전개 번호를 사용해야 하는 사이클은? ① G73 ② G74 ③ G75 ④ G76"<br>정답표 ③ G75 → <b>① G73</b></p><p class="mini">전개 번호 P(시작)·Q(끝)로 가공 형상을 지정하는 것은 복합 반복 사이클 G70~G73이다. G74·G75·G76은 P·Q를 다른 뜻으로 쓴다.</p></div>
+    <div class="box"><h4>칩의 형태 <span class="gq tonly">기출 4-34</span></h4><p class="mini">"바이트 경사각 및 절삭 속도가 크고, 점성이 있는 연한 재료를 절삭할 때 생기는 칩은?"<br>정답표 열단형 → <b>유동형 칩</b></p><p class="mini">경사각이 크고 절삭 속도가 빠르면 칩이 연속으로 흘러 나온다(유동형). 열단형은 점성 재료를 경사각을 작게, 저속으로 깎을 때 생긴다.</p></div>
+  </div>
+  <div class="analogy" style="margin-top:10px"><b class="lab">비유</b>내비게이션도 가끔 길을 잘못 안내한다. 지도(교과 이론)를 알고 있으면 잘못된 안내를 알아챌 수 있다.</div>
+  <div class="oneline" style="margin-top:auto"><b>시험장에서</b>문제에 주어진 조건으로 원리를 따져 답한다. 정답표를 외우지 말고 이유를 외운다.</div>
+  
+</section>
+
+<!-- 교사용 정답표 -->
+
+
+<!-- 26차시 표지 -->
+<section class="page sec-cover" data-title="26차시 · 최종 정리">
+  <div class="num">26</div>
+  <h1>최종 정리 — 시험장에 들고 갈 것</h1>
+  <div class="sub">G·M코드 카드(선반·머시닝센터) / 공식 계산 연습<br>헷갈리는 것 모음(교재 오류·정답 확인 포함) / 시험 당일 안내</div>
+  
+</section>
+
+<!-- 코드 카드 -->
+<section class="page" data-title="G·M코드 카드 (움직이는 그림)">
+  <div class="kicker"><span class="lesson">26차시</span>코드 카드 <span class="pg">교재 15~17쪽 · 보충 Ⅲ</span></div>
+  <h2>코드를 보고 뜻을 말한다</h2>
+  <div class="cols c64">
+    <div class="col" style="gap:8px">
+      <div class="ctrl"><button data-fc="all" class="on">전체</button><button data-fc="L">CNC 선반 G</button><button data-fc="M">머시닝센터 G</button><button data-fc="C">공통 G</button><button data-fc="X">M코드</button></div>
+      <div class="fc-card" id="fc-card"><span class="fc-tag" id="fc-tag"></span><div class="fc-code" id="fc-code"></div><div class="fc-mean" id="fc-mean"></div></div>
+      <div class="ctrl"><button id="fc-flip">뜻 보기</button><span class="sp"></span><button id="fc-yes">알았다</button><button id="fc-no">몰랐다</button><span class="sp"></span><button id="fc-rst">섞어서 다시</button></div>
+      <div class="readout" id="fc-out"></div>
+    </div>
+    <div class="col" style="gap:8px">
+      <div class="box gd"><h4>같은 번호, 다른 뜻</h4><p class="mini"><b>G73</b> 선반 형상 반복 / 머시닝센터 고속 심공 드릴<br><b>G74</b> 선반 단면 홈·Z 드릴 / 머시닝센터 역태핑<br><b>G76</b> 선반 나사 사이클 / 머시닝센터 정밀 보링<br><b>G90</b> 선반 내·외경 절삭 사이클 / 머시닝센터 절대 지령<br><b>G98·G99</b> 선반 분당·회전당 이송 / 머시닝센터 초기점·R점 복귀</p></div>
+      <div class="box"><h4>몰랐던 코드</h4><p class="mini" id="fc-miss">아직 없다.</p></div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 공식 연습 -->
+<section class="page" data-title="공식 계산 연습 (움직이는 그림)">
+  <div class="kicker"><span class="lesson">26차시</span>공식 연습 <span class="pg">계산형 39~40번 대비</span></div>
+  <h2>공식 9가지 — 숫자가 바뀌어도 풀 수 있다</h2>
+  <div class="cols c46">
+    <div class="col" style="gap:4px">
+      <table class="t" style="font-size:14px">
+        <tr><th>구하는 것</th><th>공식</th></tr>
+        <tr><td>선반 회전수</td><td><b>N = 1000V ÷ (πD)</b> [rpm]</td></tr>
+        <tr><td>절삭 속도</td><td><b>V = πDN ÷ 1000</b> [m/min]</td></tr>
+        <tr><td>밀링 이송</td><td><b>F = fz × Z × N</b> [mm/min]</td></tr>
+        <tr><td>탭 이송</td><td><b>F = 피치 × N</b> [mm/min]</td></tr>
+        <tr><td>기초 드릴</td><td><b>호칭 지름 − 피치</b></td></tr>
+        <tr><td>편심량</td><td><b>e = 다이얼게이지 읽음 ÷ 2</b></td></tr>
+        <tr><td>버니어 최소 눈금</td><td><b>어미자 1눈금 ÷ 등분 수</b></td></tr>
+        <tr><td>나사 이동량</td><td><b>줄 수 × 피치 × 회전각 ÷ 360</b></td></tr>
+        <tr><td>최대 죔새</td><td><b>축 최대 − 구멍 최소</b></td></tr>
+      </table>
+    </div>
+    <div class="col">
+      <div class="wbox">
+        <div class="ctrl" style="gap:4px"><button data-fm="all" class="on">무작위</button><button data-fm="N">회전수</button><button data-fm="V">절삭 속도</button><button data-fm="F">밀링 이송</button><button data-fm="T">탭 이송</button><button data-fm="D">기초 드릴</button><button data-fm="E">편심</button><button data-fm="VN">버니어</button><button data-fm="L">이동량</button><button data-fm="I">죔새</button></div>
+        <div class="card" style="min-height:120px"><p id="fm-q" style="font-size:19px;line-height:1.6;margin:0;font-weight:600"></p></div>
+        <div class="drill">답 <input id="fm-in" placeholder="숫자만"> <span id="fm-unit" style="font-weight:700"></span> <button id="fm-chk">확인</button><button class="sub" id="fm-new">새 문제</button><button class="sub" id="fm-show">풀이 보기</button></div>
+        <div class="readout" id="fm-fb" style="min-height:52px"></div>
+        <div class="readout" id="fm-cnt" style="color:#5b6876;font-weight:400;font-size:14px"></div>
+      </div>
+      <div class="analogy" style="font-size:15px"><b class="lab">비유</b>공식은 열쇠고리와 같다. 문제를 읽고 어떤 열쇠(공식)인지 먼저 고르면, 나머지는 숫자를 끼워 돌리기만 하면 된다.</div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 헷갈리는 것 -->
+<section class="page" data-title="헷갈리는 것 모음">
+  <div class="kicker"><span class="lesson">26차시</span>헷갈리는 것 <span class="pg">Ⅰ~Ⅳ 전체</span></div>
+  <h2>시험 직전에 한 번 더 — 헷갈리는 짝</h2>
+  <div class="cols">
+    <div class="col">
+      <table class="t" style="font-size:13.5px">
+        <tr><th style="width:44%">헷갈리는 것</th><th>바르게 알기</th></tr>
+        <tr><td>평면 선택</td><td>G17 X-Y · <b>G18 Z-X</b> · <b>G19 Y-Z</b></td></tr>
+        <tr><td>선반 사이클(교재 17쪽 표)</td><td>G71 내·외경 황삭 · <b>G72 단면 황삭</b> · <b>G73 형상 반복</b> · <b>G74 단면 홈·Z 드릴</b> · G75 X 홈 · G76 나사</td></tr>
+        <tr><td>머신 록 · 드라이 런</td><td>머신 록: 축만 정지(주축은 회전) · 드라이 런: F 대신 조작반 이송 속도</td></tr>
+        <tr><td>G96 · G97 · G50</td><td>G96 절삭 속도 일정 · G97 회전수 일정 · G50 최고 회전수 제한</td></tr>
+        <tr><td>G41 · G42</td><td>진행 방향 기준 공구가 <b>왼쪽 G41, 오른쪽 G42</b></td></tr>
+        <tr><td>공구 번호</td><td>선반 T0101(앞 공구·뒤 보정) · 머시닝센터 길이 <b>H</b>, 지름 <b>D</b></td></tr>
+        <tr><td>소수점 · 휴지</td><td><b>P</b>는 소수점 불가 · 2초 = G04 X2. = U2. = P2000</td></tr>
+        <tr><td>원호 R의 부호</td><td>180°를 넘는 원호는 <b>R−</b></td></tr>
+      </table>
+    </div>
+    <div class="col">
+      <table class="t" style="font-size:13.5px">
+        <tr><th style="width:44%">헷갈리는 것</th><th>바르게 알기</th></tr>
+        <tr><td>마이크로미터(교재 14쪽)</td><td>'스핀들 눈금'이 아니라 <b>슬리브 눈금</b> + 심블 눈금</td></tr>
+        <tr><td>플러그 · 링 게이지</td><td>플러그 = <b>암나사(구멍)</b> · 링 = <b>수나사(축)</b></td></tr>
+        <tr><td>편심량 측정</td><td>다이얼게이지 읽음 = <b>편심량 × 2</b></td></tr>
+        <tr><td>리밍 · 보링</td><td>리밍 = 정밀 다듬질 · 보링 = 넓힘</td></tr>
+        <tr><td>카운터 보어 · 싱크</td><td>보어 = 원통 자리 · 싱크 = 원추(접시) 자리 · 스폿 페이싱 = 얕은 자리</td></tr>
+        <tr><td>크레이터 · 플랭크</td><td>크레이터 = 경사면 오목 · 플랭크 = 여유면 띠</td></tr>
+        <tr><td>CNMG의 N</td><td>칩 브레이커가 아니라 <b>여유각 0°</b> · 08 = 코너 R 0.8</td></tr>
+        <tr><td>Ry · Rz (교재 9쪽)</td><td>Ry = 최대 높이 · <b>Rz = 10점 평균</b>(봉우리 5개 평균 − 골 5개 평균). 교재·시험 기준이며, 현행 ISO 규격에서는 Rz가 최대 높이이다.</td></tr>
+        <tr><td>G94 F100 (교재 15쪽)</td><td><b>100 mm/min</b>(m/min 아님)</td></tr>
+        <tr><td>M10×1.5 기초 드릴</td><td>간편식 8.5 · 보기에 없으면 <b>8.6</b>(허용 범위 안)</td></tr>
+        <tr><td>정답표와 다른 기출</td><td>4-14 <b>0.02</b> · 3-26 <b>G73</b> · 4-34 <b>유동형</b> · 4-12 <b>① 백래시</b> <span class="chk tonly">정답 확인</span></td></tr>
+      </table>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 시험 당일 -->
+<section class="page" data-title="시험 당일 안내">
+  <div class="kicker"><span class="lesson">26차시</span>시험 당일 <span class="pg">외부평가 1차 지필 · 2차 실무</span></div>
+  <h2>두 시험 모두 본다 — 하나라도 빠지면 실격</h2>
+  <div class="cols">
+    <div class="col" style="gap:8px">
+      <div class="box hl"><h4>1차 지필 (공단 지정 장소)</h4><p class="mini">90분 · 40문항 · 100점(외부평가의 40 %)<br>객관식 30문항(각 2점) + 주관식 10문항(각 4점)<br>준비물·계산기 허용 여부는 <b>수험표와 시행 공고</b>로 확인한다.</p></div>
+      <div class="box gd"><h4>2차 실무 (학교 실습실)</h4><p class="mini">6시간 · 작업형 3과제 · 100점(외부평가의 60 %)<br>1과제 1시간 30분 · 2과제 2시간 · 3과제 2시간 30분</p></div>
+      <div class="formula" style="font-size:19px">외부 = 지필 × 0.4 + 실무 × 0.6<br>최종 = (내부 + 외부) ÷ 2 ≥ 80</div>
+    </div>
+    <div class="col" style="gap:8px">
+      <h3 style="margin:0">시험 전날 점검표</h3>
+      <div class="steps">
+        <div>G·M코드 카드를 한 번 넘기며 '몰랐던 코드'만 다시 본다</div>
+        <div>공식 9가지를 빈 종이에 써 본다(단위까지)</div>
+        <div>헷갈리는 것 모음의 오른쪽 열을 가리고 말해 본다</div>
+        <div>계산형은 공식 → 대입 → 답 → 단위 순서로 쓴다</div>
+        <div class="hl">'3가지 쓰기'는 확실한 것부터, 연결형은 네 쌍을 모두 맞게</div>
+      </div>
+      <div class="analogy" style="font-size:15px"><b class="lab">비유</b>지필은 실무를 위한 '발판'이다. 지필에서 10점을 더 받으면 실무에서 필요한 점수가 약 6.7점 줄어든다(외부 = 지필 × 0.4 + 실무 × 0.6, 오리엔테이션 합격 계산기).</div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- 교사용 확인 목록 -->
+
+
+
+</div></div>
+
+<div id="memoPanel"></div>
+<div id="rot"><span>화면을 가로로 돌리면 크게 보인다. 글자가 작으면 두 손가락으로 확대하고, 좌우로 밀면 쪽이 넘어간다.</span><button id="rot-x">닫기</button></div>
+<div id="nav">
+  <button id="prev">이전</button><span id="count"></span><button id="next">다음</button>
+  <select id="toc"></select>
+</div>
+
+<script>
+if(/[?&]print/.test(location.search))document.body.classList.add('print');
+const NS='http://www.w3.org/2000/svg';
+const C={navy:'#0F3057',teal:'#00879E',gold:'#FFC145',ink:'#1d2733',muted:'#5b6876',soft:'#e6ecf3',tsoft:'#e2f3f5',gsoft:'#fff4d6',red:'#c8423b',blue:'#2f6fd1',line:'#d6dee6'};
+function el(tag,at,parent){const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);if(parent)parent.appendChild(e);return e;}
+function txt(parent,x,y,s,at){const t=el('text',Object.assign({x,y,'font-size':14,fill:C.ink},at||{}),parent);t.textContent=s;return t;}
+function set(e,at){for(const k in at)e.setAttribute(k,at[k]);return e;}
+function $(id){return document.getElementById(id);}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function fx(v,n){return (+v).toFixed(n);}
+const deg=Math.PI/180;
+/* 결정적 난수(쪽을 다시 열어도 같은 모양) */
+let seed=7;function rnd(){seed=(seed*16807)%2147483647;return (seed-1)/2147483646;}
+function gauss(){return (rnd()+rnd()+rnd()+rnd()-2)/0.58;}
+/* 축 그리기 */
+function axes(g,x0,y0,w,h,xl,yl){
+  el('line',{x1:x0,y1:y0,x2:x0+w,y2:y0,stroke:C.navy,'stroke-width':2,'marker-end':'url(#ahn)'},g);
+  el('line',{x1:x0,y1:y0,x2:x0,y2:y0-h,stroke:C.navy,'stroke-width':2,'marker-end':'url(#ahn)'},g);
+  if(xl)txt(g,x0+w,y0+20,xl,{'text-anchor':'end','font-size':13,fill:C.muted});
+  if(yl)txt(g,x0+6,y0-h+4,yl,{'font-size':13,fill:C.muted});
+}
+function pathOf(pts){return pts.map((p,i)=>(i?'L':'M')+fx(p[0],1)+' '+fx(p[1],1)).join(' ');}
+
+/* ---------- 페이지 넘김 ---------- */
+const allPages=[...document.querySelectorAll('.page')];
+let teacher=/[?&](teacher|print)/.test(location.search);  /* 교사 화면은 교사용 PDF 캡처 때만 */
+let cur=0;
+function visiblePages(){return allPages.filter(p=>teacher||!p.classList.contains('teacher-only'));}
+function buildToc(){const toc=$('toc');toc.innerHTML='';visiblePages().forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=(i+1)+'. '+p.dataset.title;toc.appendChild(o);});}
+function show(i){
+  const vp=visiblePages();cur=Math.max(0,Math.min(vp.length-1,i));
+  allPages.forEach(p=>p.classList.remove('on'));const p=vp[cur];p.classList.add('on');
+  $('count').textContent=(cur+1)+' / '+vp.length;
+  $('toc').value=cur;
+  const m=p.querySelector('.memo');$('memoPanel').innerHTML=m?m.innerHTML:'<span style="color:#5b6876">이 쪽에는 교사 메모가 없다.</span>';
+  try{if(location.protocol!=='data:')history.replaceState(null,'','#p'+(cur+1));}catch(e){}
+}
+function applyMode(){
+  document.body.classList.toggle('teacher',teacher);
+  if($('mode'))$('mode').textContent=teacher?'학생 보기로 전환':'교사 보기로 전환';
+  const curPage=visiblePages()[cur];buildToc();
+  let idx=visiblePages().indexOf(curPage);if(idx<0)idx=visiblePages().length-1;show(idx);fit();
+}
+$('prev').onclick=()=>show(cur-1);
+$('next').onclick=()=>show(cur+1);
+$('toc').onchange=e=>show(+e.target.value);
+if($('mode'))$('mode').onclick=()=>{teacher=!teacher;try{localStorage.setItem('cam-mode',teacher?'teacher':'student');}catch(e){}applyMode();};
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='SELECT'||e.target.tagName==='INPUT')return;
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(cur+1);}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(cur-1);}
+});
+function fit(){const vp=$('viewport');const s=Math.min(vp.clientWidth/1300,vp.clientHeight/740);$('stage').style.transform='scale('+s+')';}
+window.addEventListener('resize',fit);
+document.querySelectorAll('.q button').forEach(b=>b.onclick=()=>{const a=b.parentElement.querySelector('.ans');a.style.display=a.style.display==='block'?'none':'block';});
+
+/* ---------- 위젯 공통 ---------- */
+const widgets=[];
+function widget(svgId,obj){const svg=$(svgId);obj.svg=svg;obj.box=svg.closest('.wbox')||svg.parentElement;obj.page=svg.closest('.page');
+  if(obj.playing===undefined)obj.playing=true;obj.init();obj.draw();
+  const pb=obj.box.querySelector('[data-play]');if(pb)pb.onclick=()=>{obj.playing=!obj.playing;pb.textContent=obj.playing?'정지':'재생';pb.classList.toggle('on',obj.playing);};
+  if(obj.step)widgets.push(obj);return obj;}
+function group(box,attr,cb){const bs=[...box.querySelectorAll('['+attr+']')];bs.forEach(b=>b.onclick=()=>{bs.forEach(x=>x.classList.remove('on'));b.classList.add('on');cb(b.getAttribute(attr));});}
+function slider(id,cb){const s=$(id);s.addEventListener('input',()=>cb(+s.value));return +s.value;}
+let last=performance.now();
+function safe(name,fn){try{fn();}catch(e){console.error('위젯 오류: '+name,e);}}
+
+
+const minis=[];
+/* ================= 공통: O·X/보기 문제, 분류 활동 ================= */
+safe('ox',()=>{document.querySelectorAll('.ox').forEach(box=>{
+  const a=+box.dataset.a;const bs=[...box.querySelectorAll('button')];const fb=box.parentElement.querySelector('.fb');
+  const e=box.dataset.e;  /* 풀이가 있으면 정답일 때 풀이를, 틀리면 '정답과 풀이 보기' 단추를 보인다 */
+  const reveal=()=>{bs.forEach(x=>x.className='');bs[a-1].className='right';fb.innerHTML='<b class="fb-ok">정답은 '+bs[a-1].textContent+'이다.</b> '+e;};
+  const others=()=>{if(e)box.closest('.page').querySelectorAll('.q .fb').forEach(x=>{if(x!==fb)x.innerHTML='';});};  /* 풀이는 방금 푼 문항만 보여 쪽이 넘치지 않게 한다 */
+  bs.forEach((b,i)=>b.onclick=()=>{bs.forEach(x=>x.className='');others();
+    if(i+1===a){b.className='right';if(fb){if(e)fb.innerHTML='<b class="fb-ok">정답이다.</b> '+e;else fb.textContent='정답이다.';}}
+    else{b.className='wrong';if(fb){if(e){fb.innerHTML='<b class="fb-no">틀렸다.</b> 다시 골라 본다. ';const sb=document.createElement('button');sb.className='fb-show';sb.textContent='정답과 풀이 보기';sb.onclick=reveal;fb.appendChild(sb);}else fb.textContent='다시 생각해 보자.';}}});});});
+
+/* 분류 활동: 컨테이너 id, 종류 단추 속성, 채점·초기화 단추 */
+function sorter(id,attr){
+  const box=$(id);const page=box.closest('.page');const items=[...box.querySelectorAll('button')];
+  let curC='1';const cls={'1':'c1','2':'c2','3':'c3'};
+  group(page,attr,v=>curC=v);
+  items.forEach(b=>b.onclick=()=>{b.className=cls[curC];b.dataset.pick=curC;});
+  $(id+'-chk').onclick=()=>{let ok=0,n=0;items.forEach(b=>{if(!b.dataset.pick)return;n++;
+    if(b.dataset.pick===b.dataset.c)ok++;else b.className='bad';});
+    $(id+'-out').textContent=n?('고른 '+n+'개 중 '+ok+'개 정답 (전체 '+items.length+'개)'):'먼저 상황을 눌러 분류한다.';};
+  $(id+'-rst').onclick=()=>{items.forEach(b=>{b.className='';delete b.dataset.pick;});$(id+'-out').textContent='';};
+}
+
+/* ================= 22차시 ================= */
+/* 리드와 줄 수 */
+safe('lead',()=>widget('w-lead',{playing:false,n:1,p:2,a:360,
+  init(){this.g=el('g',{},this.svg);group(this.box,'data-ln',x=>{this.n=+x;this.draw();});group(this.box,'data-lp',x=>{this.p=+x;this.draw();});slider('ld-a',x=>{this.a=x;this.draw();});},
+  draw(){const g=this.g;g.innerHTML='';const K=22,x0=40,y0=70,H=90,len=480;const L=this.n*this.p,mv=L*this.a/360;
+    el('rect',{x:x0,y:y0,width:len,height:H,fill:'#e6ecf3',stroke:C.navy,'stroke-width':2},g);
+    const cols=[C.teal,C.red,'#9a7400'];
+    for(let s=0;s<this.n;s++){for(let x=x0+s*this.p*K-L*K;x<x0+len;x+=L*K){const xa=x,xb=x+L*K/2;if(xb<x0||xa>x0+len)continue;
+      el('line',{x1:Math.max(x0,xa),y1:y0+H-(Math.max(x0,xa)-xa)/(xb-xa)*H,x2:Math.min(x0+len,xb),y2:y0+H-(Math.min(x0+len,xb)-xa)/(xb-xa)*H,stroke:cols[s],'stroke-width':3},g);}}
+    // 피치 표시
+    el('line',{x1:x0+40,y1:y0-14,x2:x0+40+this.p*K,y2:y0-14,stroke:C.navy,'stroke-width':1.5,'marker-start':'url(#ahs)','marker-end':'url(#ahn)'},g);txt(g,x0+40+this.p*K/2,y0-20,'피치 '+this.p,{'text-anchor':'middle','font-size':12.5,fill:C.navy,'font-weight':700});
+    if(this.n>1){el('line',{x1:x0+40,y1:y0+H+14,x2:x0+40+L*K,y2:y0+H+14,stroke:C.red,'stroke-width':1.5,'marker-start':'url(#ahs)','marker-end':'url(#ahn)'},g);txt(g,x0+40+L*K/2,y0+H+30,'리드 '+L,{'text-anchor':'middle','font-size':12.5,fill:C.red,'font-weight':700});}
+    // 너트 이동
+    const nx=x0+120+mv*K;el('rect',{x:nx-14,y:y0-6,width:28,height:H+12,rx:4,fill:'rgba(255,193,69,.6)',stroke:C.navy,'stroke-width':2},g);
+    el('line',{x1:x0+120,y1:y0+H+50,x2:nx,y2:y0+H+50,stroke:C.teal,'stroke-width':3,'marker-end':'url(#ah)'},g);txt(g,x0+120,y0+H+70,'이동 '+fx(mv,2)+' mm',{'font-size':14,'font-weight':800,fill:C.teal});
+    // 회전 표시
+    const cx=500,cy=240,r=18;el('circle',{cx,cy,r,fill:'#fff',stroke:C.navy,'stroke-width':2},g);const an=-Math.PI/2+this.a*deg;el('line',{x1:cx,y1:cy,x2:cx+Math.cos(an)*r,y2:cy+Math.sin(an)*r,stroke:C.red,'stroke-width':3},g);txt(g,cx-26,cy+5,this.a+'°',{'text-anchor':'end','font-size':13,fill:C.red,'font-weight':700});
+    txt(g,x0,26,this.n+'줄 나사 · 리드 = '+this.n+' × '+this.p+' = '+L+' mm',{'font-size':15,'font-weight':800,fill:C.navy});
+    $('ld-out').textContent=`이동량 = 리드 × 회전각 ÷ 360 = ${L} × ${this.a} ÷ 360 = ${fx(mv,3)} mm`+(this.n>1?` (색이 다른 나선 ${this.n}개가 함께 감겨 있다)`:'');}}));
+
+/* ================= 23차시 ================= */
+/* 구멍 가공 종류 */
+safe('holes',()=>widget('w-holes',{m:'dr',t:0,
+  init(){this.g=el('g',{},this.svg);group(this.box,'data-ho',x=>{this.m=x;this.t=0;});},
+  step(dt){this.t=(this.t+dt*0.3)%1.4;},
+  draw(){const g=this.g;g.innerHTML='';const m=this.m,f=Math.min(1,this.t);const X=280,T=90,B=230;const W='#ffffff',BR='#b8963c';
+    // 공작물
+    if(m==='sf')el('path',{d:`M120 ${T+6} q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 V${B} H120 Z`,fill:C.gsoft,stroke:BR,'stroke-width':2},g);
+    else el('rect',{x:120,y:T,width:320,height:B-T,fill:C.gsoft,stroke:BR,'stroke-width':2},g);
+    const hole=(r,y0,y1,tip)=>{let d=`M${X-r} ${y0} V${y1}`+(tip?` L${X} ${y1+r*0.6} L${X+r} ${y1}`:` H${X+r}`)+` V${y0} Z`;el('path',{d,fill:W,stroke:BR,'stroke-width':1.5},g);};
+    let msg='';const dep=T+(B-T-10)*f;
+    if(m==='dr'){if(f>0.02)hole(18,T,dep,true);msg='드릴링: 드릴이 회전하며 내려가 구멍을 뚫는다. 끝은 날끝각(118°) 모양이 남는다.';}
+    if(m==='tap'){hole(15,T,B-10,true);for(let y=T+6;y<T+6+(B-T-30)*f;y+=9){el('path',{d:`M${X-15} ${y} l-5 4 l5 4 M${X+15} ${y} l5 4 l-5 4`,fill:'none',stroke:BR,'stroke-width':1.5},g);}msg='태핑: 드릴 구멍(기초 드릴)에 탭으로 암나사를 낸다. 기초 드릴 = 호칭 − 피치.';}
+    if(m==='rm'){el('path',{d:`M${X-16} ${T} `+[...Array(14)].map((_,i)=>`L${X-16+(i%2?-2:2)} ${T+i*10}`).join(' ')+` V${B-10} H${X+16} V${T} Z`,fill:W,stroke:BR},g);
+      el('rect',{x:X-18,y:T,width:36,height:(B-T-10)*f,fill:W,stroke:C.teal,'stroke-width':2},g);msg='리밍: 드릴 구멍(울퉁불퉁)을 리머로 깎아 정밀하고 매끈한 구멍으로 다듬는다. 다듬질 여유는 작다.';}
+    if(m==='bo'){hole(15,T,B-10,false);el('rect',{x:X-15-13*f,y:T,width:30+26*f,height:B-T-10,fill:W,stroke:C.teal,'stroke-width':2},g);msg='보링: 이미 뚫린 구멍을 보링 바이트(공구)로 깎아 넓힌다. 구멍의 위치·진원도를 바로잡는다.';}
+    if(m==='cb'){hole(12,T,B,false);if(f>0.02)el('rect',{x:X-26,y:T,width:52,height:40*f,fill:W,stroke:C.teal,'stroke-width':2},g);msg='카운터 보링: 볼트 머리가 묻히도록 원통형 자리를 판다(깊다).';}
+    if(m==='sf'){hole(12,T+6,B,false);if(f>0.02)el('rect',{x:X-28,y:T-6,width:56,height:(16)*f,fill:W,stroke:C.teal,'stroke-width':2},g);msg='스폿 페이싱: 울퉁불퉁한 주물면에 볼트 자리를 평평하게 판다. 카운터 보링과 비슷하지만 깊이가 얕다.';}
+    if(m==='cs'){hole(12,T,B,false);if(f>0.02){const r=12+16*f;el('path',{d:`M${X-r} ${T} L${X-12} ${T+(r-12)} H${X+12} L${X+r} ${T} Z`,fill:W,stroke:C.teal,'stroke-width':2},g);}msg='카운터 싱킹: 접시머리 볼트가 묻히도록 원추(접시)형으로 판다(60°·90°·120°).';}
+    // 공구
+    const ty=T-60+(B-T-10)*f*(m==='cb'||m==='sf'||m==='cs'?0.3:1);el('rect',{x:X-8,y:ty-60,width:16,height:60,fill:'#5fb3c2',stroke:C.navy},g);
+    txt(g,20,26,{dr:'드릴링',tap:'태핑',rm:'리밍',bo:'보링',cb:'카운터 보링',sf:'스폿 페이싱',cs:'카운터 싱킹'}[m],{'font-size':18,'font-weight':800,fill:C.navy});
+    $('ho-out').textContent=msg;}}));
+
+/* 드릴 구조 */
+safe('drill',()=>widget('w-drill',{playing:false,k:'tip',
+  init(){this.g=el('g',{},this.svg);group(this.box,'data-dp',x=>{this.k=x;this.draw();});},
+  draw(){const g=this.g;g.innerHTML='';const k=this.k;const H=c=>this.k===c?C.red:null;const y=120;
+    el('rect',{x:20,y:y-12,width:24,height:24,fill:H('tang')||'#9aa7b4',stroke:C.navy},g);
+    el('path',{d:`M44 ${y-22} L200 ${y-26} V${y+26} L44 ${y+22} Z`,fill:H('shank')||'#c9d4df',stroke:C.navy},g);
+    el('rect',{x:200,y:y-30,width:330,height:60,fill:H('body')||'#7fc3cf',stroke:C.navy},g);
+    for(let x=210;x<520;x+=36)el('path',{d:`M${x} ${y+30} L${x+30} ${y-30}`,stroke:H('flute')||C.navy,'stroke-width':H('flute')?5:2.5},g);
+    el('rect',{x:200,y:y-30,width:330,height:6,fill:H('margin')||'#5fb3c2',stroke:'none'},g);
+    el('path',{d:`M530 ${y-30} L548 ${y} L530 ${y+30} Z`,fill:H('lip')||'#7fc3cf',stroke:H('lip')?C.red:C.navy,'stroke-width':H('lip')?4:1.5},g);
+    el('circle',{cx:546,cy:y,r:4,fill:H('chisel')||C.navy},g);
+    if(k==='tip'){el('path',{d:`M512 ${y-60} L548 ${y} L512 ${y+60}`,fill:'none',stroke:C.red,'stroke-width':2,'stroke-dasharray':'5 4'},g);el('path',{d:`M532.6 ${y-25.7} A30 30 0 0 0 532.6 ${y+25.7}`,fill:'none',stroke:C.red,'stroke-width':2},g);txt(g,470,y+4,'118°',{'font-size':18,'font-weight':800,fill:C.red});}
+    const L={tang:[32,y+40,'탱'],shank:[120,y+50,'자루'],body:[365,y+52,'몸체'],flute:[300,y-40,'홈(플루트)'],margin:[400,y-40,'마진'],lip:[548,y+50,'절삭날'],chisel:[556,y-40,'치즐 에지'],tip:[540,y-70,'날끝각']};
+    for(const q in L){const [x,yy,s]=L[q];txt(g,x,yy,s,{'text-anchor':'middle','font-size':12.5,'font-weight':q===k?800:400,fill:q===k?C.red:C.muted});}
+    const D={tip:'날끝각: 두 절삭날이 이루는 각. 표준 118°. 단단한 재료는 크게, 무른 재료는 작게 한다.',lip:'절삭날: 실제로 금속을 깎는 날(두 개). 날 뒤쪽에는 여유각 12~15°를 준다.',chisel:'치즐 에지: 드릴 끝의 두 날이 만나는 짧은 날. 절삭이 잘 안 되므로 센터 드릴로 먼저 자리를 잡는다.',
+      flute:'홈(플루트): 칩이 빠져나가고 절삭유가 들어가는 나선 홈.',margin:'마진: 몸체 바깥쪽의 좁은 띠. 구멍 벽에 닿아 드릴을 안내한다.',body:'몸체: 홈과 날이 있는 부분.',shank:'자루: 드릴을 잡는 부분. 곧은 자루(드릴 척)·테이퍼 자루(주축에 직접).',tang:'탱: 테이퍼 자루 끝의 납작한 부분. 뺄 때는 소켓 구멍에 드리프트(쐐기)를 넣어 탱을 밀어 빼낸다.'};
+    $('dp-out').textContent=D[k];}}));
+
+/* 탭과 칩 */
+safe('taps',()=>widget('w-taps',{m:'sp',t:0,
+  init(){this.g=el('g',{},this.svg);group(this.box,'data-tt',x=>{this.m=x;this.t=0;});},
+  step(dt){this.t+=dt;},
+  draw(){const g=this.g;g.innerHTML='';const m=this.m;const X=200,T=70,B=230,through=m==='pt';
+    el('rect',{x:80,y:T,width:240,height:B-T,fill:C.gsoft,stroke:'#b8963c','stroke-width':2},g);
+    el('rect',{x:X-20,y:T,width:40,height:through?B-T:(B-T-30),fill:'#fff',stroke:'#b8963c'},g);
+    if(!through)txt(g,X,B-8,'막힌 구멍',{'text-anchor':'middle','font-size':11.5,fill:'#9a7400'});else txt(g,X+28,B-8,'관통 구멍',{'font-size':11.5,fill:'#9a7400'});
+    const dep=T+((this.t*25)%(through?150:120));el('rect',{x:X-16,y:T-70,width:32,height:dep-T+70,fill:'#5fb3c2',stroke:C.navy},g);
+    for(let y=T-60;y<dep;y+=10){if(m==='sp')el('path',{d:`M${X-16} ${y} L${X+16} ${y+8}`,stroke:C.navy,'stroke-width':1.5},g);else if(m==='pt')el('line',{x1:X,y1:y,x2:X,y2:y+8,stroke:C.navy},g);}
+    if(m!=='rl'){for(let i=0;i<8;i++){const ph=(this.t*0.8+i/8)%1;const cy=m==='sp'?dep-ph*(dep-T+40):dep+ph*80;const cx=X+(i%2?24:-24)+Math.sin(ph*12)*4;if(cy<B+20)el('path',{d:`M${cx} ${cy} q4 -6 8 0 q-4 6 -8 0`,fill:C.red},g);}}
+    const arrow=m==='sp'?[[X+40,dep],[X+40,T-30]]:(m==='pt'?[[X+40,T+40],[X+40,B+10]]:null);if(arrow)el('line',{x1:arrow[0][0],y1:arrow[0][1],x2:arrow[1][0],y2:arrow[1][1],stroke:C.red,'stroke-width':3,'marker-end':'url(#ah)'},g);
+    const tx=350;txt(g,tx,60,{sp:'스파이럴 탭',pt:'포인트 탭',rl:'전조 탭'}[m],{'font-size':20,'font-weight':800,fill:C.navy});
+    const D={sp:['칩: 위로(홈을 따라)','구멍: 막힌 구멍에 알맞음','특징: 비틀림 홈, 절삭성 좋음'],pt:['칩: 아래로(구멍 밑)','구멍: 관통 구멍','특징: 고속 가공, 파손 강도 큼'],rl:['칩: 없다(소성 변형)','구멍: 뚫린·막힌 겸용','특징: 홈 없음, 알맞은 조건에서 수명이 길다']};
+    D[m].forEach((s,i)=>txt(g,tx,100+i*28,s,{'font-size':14,fill:i===0?C.red:C.navy,'font-weight':i===0?700:400}));
+    $('tt-out').textContent={sp:'스파이럴 탭은 비틀린 홈이 칩을 위로 끌어올려 막힌 구멍에서도 칩이 바닥에 쌓이지 않는다.',pt:'포인트 탭은 끝의 비스듬한 날이 칩을 앞(아래)으로 밀어내 관통 구멍에 알맞다.',rl:'전조 탭은 깎지 않고 눌러서 나사산을 만든다. 칩이 생기지 않아 홈이 필요 없다.'}[m];}}));
+
+/* ================= 24차시 ================= */
+safe('sort24',()=>sorter('sort24','data-lf'));
+
+/* 공구 마모 3가지 */
+safe('wear',()=>widget('w-wear',{m:'crater',t:0,
+  init(){this.g=el('g',{},this.svg);group(this.box,'data-wr',x=>{this.m=x;this.t=0;this.draw();});},
+  step(dt){this.t=(this.t+dt*0.25)%1.3;},
+  draw(){const g=this.g;g.innerHTML='';const m=this.m,f=Math.min(1,this.t),tip=[250,150];
+    // 공작물(오른쪽으로 이동)과 깎이는 층
+    el('rect',{x:20,y:150,width:520,height:80,fill:C.gsoft,stroke:'#b8963c','stroke-width':2},g);
+    el('rect',{x:20,y:122,width:232,height:28,fill:C.gsoft,stroke:'#b8963c','stroke-width':1.5},g);
+    const off=(this.t*120)%40;for(let x=20+off;x<540;x+=40)el('line',{x1:x,y1:180,x2:x+14,y2:180,stroke:'#d9c48a','stroke-width':2},g);
+    el('line',{x1:60,y1:212,x2:140,y2:212,stroke:'#9a7400','stroke-width':2,'marker-end':'url(#ah)'},g);txt(g,60,205,'공작물 이동',{'font-size':11.5,fill:'#9a7400'});
+    // 칩
+    el('path',{d:`M228 122 L250 150 L262 118 Q270 70 228 60 Q200 58 196 86`,fill:'none',stroke:'#d98b2b','stroke-width':16,'stroke-linecap':'round',opacity:.85},g);
+    txt(g,170,56,'칩',{'font-size':13,fill:'#b0651a','font-weight':700});
+    // 공구
+    el('path',{d:`M250 150 L470 136 L470 40 L262 118 Z`,fill:'#7fc3cf',stroke:C.navy,'stroke-width':2},g);
+    txt(g,330,112,'경사면(윗면)',{'font-size':12.5,fill:C.navy,'font-weight':m==='crater'?800:400});
+    txt(g,340,160,'여유면',{'font-size':12.5,fill:C.navy,'font-weight':m==='flank'?800:400});
+    txt(g,400,70,'바이트',{'font-size':14,fill:C.navy,'font-weight':700});
+    // 마모 표시
+    let msg='';
+    if(m==='crater'){const d=4+16*f;el('path',{d:`M272 113 Q300 ${113+d} 330 104`,fill:C.red,stroke:C.red,'stroke-width':1.5,opacity:.9},g);
+      el('line',{x1:300,y1:30,x2:300,y2:100,stroke:C.red,'stroke-width':2,'marker-end':'url(#ah)'},g);txt(g,306,32,'분화구 모양 오목',{'font-size':13,fill:C.red,'font-weight':700});
+      msg='크레이터 마모: 칩이 경사면을 문지르며 지나가 날 끝 조금 뒤가 오목하게 파인다. 깊어지면 날 끝이 약해져 부러진다.';}
+    if(m==='flank'){const w=6+50*f;el('path',{d:`M250 150 L${250+w} ${150-w*0.064} L${250+w} ${147-w*0.064} L252 147 Z`,fill:C.red,stroke:C.red,'stroke-width':2},g);
+      el('line',{x1:250,y1:146,x2:250+w,y2:146-w*0.064,stroke:C.red,'stroke-width':5},g);
+      txt(g,256,200,'마모 폭 VB = '+fx(0.05+0.45*f,2)+' mm',{'font-size':13,fill:C.red,'font-weight':700});
+      msg='플랭크 마모: 여유면이 가공면과 문질려 날 끝 아래가 띠 모양으로 평평하게 닳는다. 마모 폭(VB)이 커지면 치수가 변하고 가공면이 나빠진다.';}
+    if(m==='chip'){const k=f>0.4;el('path',{d:`M250 150 L256 141 L249 136 L258 129 L262 118`,fill:k?'#fff':'none',stroke:k?C.red:'none','stroke-width':2},g);
+      if(k){for(let i=0;i<4;i++){const p=(f-0.4)/0.6;el('path',{d:`M${240-p*70-i*12} ${140+p*30+i*9} l5 -3 l3 5 l-6 2 z`,fill:'#7fc3cf',stroke:C.red},g);}}
+      el('path',{d:'M140 136 l14 -10 l14 10 l14 -10 l14 10',fill:'none',stroke:C.red,'stroke-width':2},g);txt(g,96,110,'충격(단속 절삭·진동)',{'font-size':12.5,fill:C.red,'font-weight':700});
+      msg='치핑: 단속 절삭이나 진동으로 날 끝에 충격이 반복되면 날 끝 일부가 작은 조각으로 떨어져 나간다.';}
+    txt(g,20,26,{crater:'① 크레이터 마모',flank:'② 플랭크 마모',chip:'③ 치핑'}[m],{'font-size':18,'font-weight':800,fill:C.navy});
+    $('wr-out').textContent=msg;
+    const S={crater:['<b>해결 방안(교재)</b>','가) 공구 윗면의 칩 흐름에 대한 저항을 줄인다 <span class="chk">(교재 「집의 흐름」은 「칩의 흐름」의 오기)</span>','나) 절삭 속도와 이송 속도를 줄인다'],
+      flank:['<b>해결 방안(교재)</b>','가) 절삭 속도를 낮추고 이송을 크게 한다','나) 절삭 깊이를 작게 하고 여유각과 노즈 반경을 다소 크게 한다','다) 날 끝을 센터에 맞추고 절삭유를 공급한다','라) 팁 재료를 단단한 것으로 쓴다'],
+      chip:['<b>해결 방안(교재)</b>','가) 절삭 날의 각도가 큰 것을 쓴다','나) 노즈 반경이 큰 공구를 쓴다','다) 윗면 경사각이 작은 칩 브레이커를 만든다','라) 팁 재료를 인성이 큰 것으로 쓴다','마) 절삭 깊이를 작게 한다']}[m];
+    $('wr-sol').innerHTML=S.join('<br>');}}));
+
+/* 칩의 형태 */
+safe('chip',()=>widget('w-chip',{mat:'duct',rk:'big',sp:'fast',t:0,
+  init(){this.g=el('g',{},this.svg);group(this.box,'data-cm',x=>{this.mat=x;this.draw();});group(this.box,'data-cr',x=>{this.rk=x;this.draw();});group(this.box,'data-cv',x=>{this.sp=x;this.draw();});},
+  step(dt){this.t+=dt*(this.sp==='fast'?1:0.4);},
+  kind(){if(this.mat==='brit')return 'crack';if(this.rk==='big'&&this.sp==='fast')return 'flow';if(this.mat==='visc'&&this.rk==='small'&&this.sp==='slow')return 'tear';return 'shear';},
+  draw(){const g=this.g;g.innerHTML='';const k=this.kind();const a=(this.rk==='big'?25:5)*deg;const tx=300,ty=150;
+    const fill=this.mat==='brit'?'#c9ccd1':C.gsoft;
+    // 공작물: 가공면 아래, 깎일 층(두께 30)
+    el('rect',{x:20,y:ty,width:520,height:85,fill,stroke:'#b8963c','stroke-width':2},g);
+    el('rect',{x:20,y:ty-30,width:tx-20,height:30,fill,stroke:'#b8963c','stroke-width':1.5},g);
+    if(k==='tear')for(let x=tx+10;x<540;x+=22)el('path',{d:`M${x} ${ty} l6 5 l6 -4 l5 3`,fill:'none',stroke:'#9a7400','stroke-width':1.5},g);
+    el('line',{x1:60,y1:ty+60,x2:150,y2:ty+60,stroke:'#9a7400','stroke-width':2,'marker-end':'url(#ah)'},g);txt(g,60,ty+52,'공작물 이동',{'font-size':11.5,fill:'#9a7400'});
+    // 공구(경사각 a)
+    const d=[Math.sin(a),-Math.cos(a)],n=[-Math.cos(a),-Math.sin(a)],re=[tx+d[0]*130,ty+d[1]*130];
+    el('path',{d:`M${tx} ${ty} L480 ${ty-12} L480 10 L${re[0]} ${re[1]} Z`,fill:'#7fc3cf',stroke:C.navy,'stroke-width':2},g);
+    el('line',{x1:tx,y1:ty,x2:tx,y2:ty-110,stroke:C.muted,'stroke-dasharray':'4 4'},g);
+    el('path',{d:`M${tx} ${ty-60} A60 60 0 0 1 ${tx+60*Math.sin(a)} ${ty-60*Math.cos(a)}`,fill:'none',stroke:C.red,'stroke-width':2},g);
+    txt(g,tx+8,ty-66,'경사각 '+(this.rk==='big'?'크게':'작게'),{'font-size':12,fill:C.red,'font-weight':700});
+    // 칩
+    const P=s=>{const c=s<100?[tx+d[0]*s+n[0]*16,ty+d[1]*s+n[1]*16]:null;if(c)return c;const r=40,th=(s-100)/r,cx0=tx+d[0]*100+n[0]*(16+r),cy0=ty+d[1]*100+n[1]*(16+r);const b=Math.atan2(-n[1],-n[0]);return [cx0+Math.cos(b-th)*r,cy0+Math.sin(b-th)*r];};
+    const ph=(this.t*30)%20;
+    if(k==='flow'){const pts=[];for(let s=0;s<=210;s+=6)pts.push(P(s));el('path',{d:pathOf(pts),fill:'none',stroke:'#d98b2b','stroke-width':26,'stroke-linecap':'round','stroke-linejoin':'round'},g);
+      for(let s=ph;s<200;s+=20){const p=P(s);el('circle',{cx:p[0],cy:p[1],r:2.5,fill:'#fff'},g);}}
+    if(k==='shear'){for(let s=ph-20;s<200;s+=20){if(s<0)continue;const p=P(s),q=P(s+16);el('path',{d:`M${p[0]-11} ${p[1]+4} L${q[0]-11} ${q[1]+4} L${q[0]+11} ${q[1]-6} L${p[0]+13} ${p[1]-2} Z`,fill:'#d98b2b',stroke:'#8a4c12','stroke-width':1.5},g);}}
+    if(k==='tear'){for(let s=ph-20;s<120;s+=20){if(s<0)continue;const p=P(s);el('path',{d:`M${p[0]-12} ${p[1]+8} l6 -16 l12 -2 l6 9 l-5 12 z`,fill:'#d98b2b',stroke:'#8a4c12','stroke-width':1.5},g);}}
+    if(k==='crack'){for(let i=0;i<9;i++){const ph2=((this.t*0.7)+i/9)%1;const x=tx-14-ph2*90+(i%3)*8,y=ty-34-ph2*40+Math.sin(i*2.1)*12+ph2*ph2*120;el('path',{d:`M${x} ${y} l7 -4 l5 6 l-6 5 z`,fill:'#8d939b',stroke:'#4b5058'},g);}}
+    const N={flow:['유동형 칩','연속된 리본 모양으로 흘러 나온다. 가공면이 가장 좋다. 길게 감기므로 칩 브레이커로 끊는다.'],shear:['전단형 칩','재료가 전단면에서 미끄러지며 마디마디 잘려 나온다. 경사각이 작거나 절삭 깊이가 클 때 생긴다.'],
+      tear:['열단형(경작형) 칩','점성이 큰 재료가 날 앞에서 뜯기듯 떨어져 나간다. 가공면에 뜯긴 자국이 남아 거칠다.'],crack:['균열형 칩','주철처럼 취성이 큰 재료가 날 앞에서 균열이 생기며 잘게 부서진다. 가공면이 거칠다.']}[k];
+    txt(g,20,28,N[0],{'font-size':20,'font-weight':800,fill:C.navy});
+    txt(g,20,52,{duct:'연성 재료(강)',visc:'점성이 큰 재료',brit:'취성 재료(주철)'}[this.mat]+' · 경사각 '+(this.rk==='big'?'크게':'작게')+' · 속도 '+(this.sp==='fast'?'빠르게':'느리게'),{'font-size':13,fill:C.muted});
+    const typ=this.mat==='brit'||(this.rk==='big'&&this.sp==='fast')||(this.mat==='visc'&&this.rk==='small'&&this.sp==='slow')||(this.mat==='duct'&&this.rk==='small');
+    $('cp-out').textContent=typ?N[1]:'이 조합은 대표 조건이 아니어서 칩 형태를 하나로 정하기 어렵다(그림은 전단형으로 보였다). 대표 조건: 유동형 = 경사각 크게·빠르게, 전단형 = 연성 재료·경사각 작게, 열단형 = 점성 재료·경사각 작게·느리게, 균열형 = 취성 재료.';}}));
+
+/* 인서트 표기 해독 */
+safe('insert',()=>widget('w-insert',{playing:false,c:'CNMG120408',
+  init(){this.g=el('g',{},this.svg);group(this.box,'data-in',x=>{this.c=x;this.draw();});},
+  poly(sh){const deg2=Math.PI/180;let pts=[];
+    const rh=th=>{const L=1,c=Math.cos(th*deg2),s=Math.sin(th*deg2);return [[0,0],[L,0],[L+c,s],[c,s]];};
+    if(sh==='C')pts=rh(80);if(sh==='D')pts=rh(55);if(sh==='V')pts=rh(35);
+    if(sh==='S')pts=[[0,0],[1,0],[1,1],[0,1]];
+    if(sh==='T')pts=[[0,0],[1,0],[0.5,Math.sqrt(3)/2]];
+    if(sh==='H'){for(let i=0;i<6;i++)pts.push([Math.cos(i*60*deg2),Math.sin(i*60*deg2)]);}
+    if(sh==='W'){let x=0,y=0,ang=0;for(let i=0;i<6;i++){pts.push([x,y]);x+=Math.cos(ang);y+=Math.sin(ang);ang+=(i%2?100:20)*deg2;}}
+    return pts;},
+  draw(){const g=this.g;g.innerHTML='';const c=this.c,sh=c[0],cl=c[1],tol=c[2],ty=c[3],sz=c.slice(4,6),th=c.slice(6,8),nr=c.slice(8,10);
+    const SH={C:'80° 마름모',D:'55° 마름모',V:'35° 마름모',S:'정사각형(90°)',T:'정삼각형(60°)',W:'80° 삼각형(트리곤)',R:'원형',H:'정육각형(120°)'};
+    const CL={N:'0°',B:'5°',C:'7°',P:'11°'};
+    const TO={M:'M급: 보통 정밀도(일반 선삭)',G:'G급: 허용차가 작은 정밀 등급'};
+    const TY={G:'구멍 있음 · 양면 칩 브레이커',M:'구멍 있음 · 한면 칩 브레이커',T:'구멍(한쪽 접시) · 한면 칩 브레이커',X:'특수 형상(제조사가 정함)'};
+    const THK={'04':'약 4.76 mm','06':'약 6.35 mm'};
+    // 모양
+    const cx=165,cy=150;if(sh==='R'){el('circle',{cx,cy,r:95,fill:'#c9d4df',stroke:C.navy,'stroke-width':2.5},g);}
+    else{let p=this.poly(sh);const xs=p.map(q=>q[0]),ys=p.map(q=>q[1]);const w=Math.max(...xs)-Math.min(...xs),h=Math.max(...ys)-Math.min(...ys);const s=Math.min(250/w,210/h);
+      const mx=(Math.max(...xs)+Math.min(...xs))/2,my=(Math.max(...ys)+Math.min(...ys))/2;p=p.map(q=>[cx+(q[0]-mx)*s,cy-(q[1]-my)*s]);
+      el('path',{d:pathOf(p)+' Z',fill:'#c9d4df',stroke:C.navy,'stroke-width':2.5,'stroke-linejoin':'round'},g);
+      // 가장 뾰족한 꼭짓점(사용 코너)에 코너 R 표시
+      const A=p[0];const r=+nr/10*14;el('circle',{cx:A[0],cy:A[1],r:Math.max(6,r),fill:'none',stroke:C.red,'stroke-width':2.5},g);
+      txt(g,A[0]-8,A[1]+28,'코너 R'+(+nr/10),{'font-size':13,fill:C.red,'font-weight':700,'text-anchor':'middle'});
+      const angTxt={C:'80°',D:'55°',V:'35°',S:'90°',T:'60°',W:'80°',H:'120°'}[sh];txt(g,A[0]+30,A[1]-8,angTxt,{'font-size':14,fill:C.red,'font-weight':800});}
+    if(ty!=='N'&&ty!=='X')el('circle',{cx,cy,r:18,fill:'#fbfcfd',stroke:C.navy,'stroke-width':2},g);
+    // 글자 칸
+    const cols=['#00879E','#c8423b','#9a7400','#2f6fd1','#0F3057','#0F3057','#5b6876','#5b6876','#c8423b','#c8423b'];
+    for(let i=0;i<10;i++){const x=330+i*40;el('rect',{x,y:12,width:36,height:42,rx:5,fill:'#fff',stroke:cols[i],'stroke-width':2},g);txt(g,x+18,43,c[i],{'text-anchor':'middle','font-size':24,'font-weight':800,fill:cols[i]});txt(g,x+18,68,String(i+1),{'text-anchor':'middle','font-size':11,fill:C.muted});}
+    const rows=[[0,'① 형상',sh+' = '+SH[sh]],[1,'② 여유각',cl+' = '+(CL[cl]||'-')],[2,'③ 공차',tol+' = '+(TO[tol]||'허용차 등급')],[3,'④ 구멍·칩 브레이커',ty+' = '+(TY[ty]||'-')],
+      [4,'⑤⑥ 크기',sz+' = '+(sh==='R'?'지름 ':'날 길이 약 ')+(+sz)+' mm'],[6,'⑦⑧ 두께',th+' = '+(THK[th]||th)],[8,'⑨⑩ 코너 R',nr==='M0'?'M0 = 원형(코너 R 없음)':nr+' = '+(+nr/10)+' mm']];
+    rows.forEach((r,i)=>{const y=100+i*27;txt(g,330,y,r[1],{'font-size':15,'font-weight':700,fill:cols[r[0]]});txt(g,490,y,r[2],{'font-size':15,fill:C.ink});});
+    $('in-out').textContent=c+' → '+SH[sh]+', 여유각 '+(CL[cl]||'-')+', '+(nr==='M0'?'원형 인서트':'코너 R '+(+nr/10)+' mm')+(cl==='N'?' (N은 칩 브레이커가 아니라 여유각 0°)':'');}}));
+
+/* 선반 절삭량 계산 */
+safe('qv',()=>{const upd=()=>{const v=+$('qv-v').value,f=+$('qv-f').value,t=+$('qv-t').value;$('qv-out').textContent=(v&&f&&t)?`Q = ${v} × ${f} × ${t} = ${fx(v*f*t,2)} cm³/min`:'세 값을 모두 넣는다.';};
+  ['qv-v','qv-f','qv-t'].forEach(id=>$(id).addEventListener('input',upd));upd();
+  let Q,v,t,ans;const mk=()=>{v=[80,100,120,150][Math.floor(rnd()*4)];t=[1,1.5,2][Math.floor(rnd()*3)];const f=[0.1,0.15,0.2,0.25,0.3][Math.floor(rnd()*5)];Q=+fx(v*f*t,1);ans=Q/(v*t);
+    $('qv-q').textContent=`Q = ${Q} cm³/min, v = ${v} m/min, t = ${t} mm일 때 이송 f [mm/rev]는?`;$('qv-in').value='';$('qv-fb').textContent='';};
+  mk();$('qv-new').onclick=mk;
+  $('qv-chk').onclick=()=>{const a=parseFloat($('qv-in').value);$('qv-fb').textContent=isNaN(a)?'숫자를 넣는다.':(Math.abs(a-ans)<0.006?'정답이다. f = Q ÷ (v × t)':'다시 계산해 보자. f = Q ÷ (v × t)');};
+  $('qv-show').onclick=()=>{$('qv-fb').textContent=`f = ${Q} ÷ (${v} × ${t}) = ${fx(ans,3)} ≒ ${fx(ans,2)} mm/rev`;};});
+
+/* ================= 25차시: 미니 모의고사 ================= */
+/* t: ox 진위, mc 4지택일, match 연결, short 단답, multi 여러 개 쓰기, calc 계산 */
+const MOCK=[
+ {s:'1-1',t:'ox',q:'소프트 조는 가공하기 쉬운 재질로 만들어져 있어 조를 척에 체결한 후 조의 내경을 가공하여 사용한다.',a:1,e:'소프트 조는 무른 강으로 만들어, 척에 단 뒤 공작물 모양에 맞게 깎아(성형하여) 쓴다.',area:'CNC'},
+ {s:'3-1',t:'ox',q:'자동 운전 중 머신 록 기능을 사용하면 주축 회전이 정지한다.',a:2,e:'머신 록은 축 이동만 멈춘다. 프로그램과 M·S·T 기능은 실행되므로 주축은 회전한다.',area:'CNC'},
+ {s:'1-3',t:'match',q:'편집키와 기능을 알맞게 연결하시오.',L:['INPUT','INSERT','ALTER','DELETE'],R:['데이터를 입력할 때 사용한다.','새로운 데이터로 수정할 때 사용한다.','작성한 문자를 삽입할 때 사용한다.','작성한 문자를 삭제할 때 사용한다.'],a:[1,3,2,4],e:'INPUT 입력, INSERT 삽입, ALTER 수정(변경), DELETE 삭제.',area:'CNC'},
+ {s:'4-4',t:'match',q:'머시닝센터 G코드와 그 기능을 알맞게 연결하시오.',L:['G81','G83','G84','G85'],R:['드릴 사이클','탭 사이클','심공 드릴 사이클','보링 사이클'],a:[1,3,2,4],e:'G81 드릴, G83 심공(펙) 드릴, G84 태핑, G85 보링.',area:'CNC'},
+ {s:'2-4',t:'match',q:'선반 공구의 인서트 형상과 기호를 알맞게 연결하시오.',L:['원형','정삼각형','정사각형','육각형'],R:['H','S','T','R'],a:[4,3,2,1],e:'R 원형(Round), T 정삼각형(Triangle), S 정사각형(Square), H 정육각형(Hexagon).',area:'공구'},
+ {s:'2-12',t:'mc',q:'19 mm의 눈금을 20등분한 버니어캘리퍼스의 최소 눈금은?',o:['0.001 mm','0.01 mm','0.02 mm','0.05 mm'],a:4,e:'어미자 1눈금 1 mm ÷ 20 = 0.05 mm.',area:'측정'},
+ {s:'2-17',t:'mc',q:'버니어캘리퍼스를 활용하여 측정할 수 없는 것은?',o:['깊이','단차','길이','진원도'],a:4,e:'진원도 같은 형상 정밀도는 다이얼게이지·진원도 측정기로 잰다.',area:'측정'},
+ {s:'3-13',t:'mc',q:'기하 공차에서 모양 공차인 것은?',o:['평행도 공차','위치도 공차','진원도 공차','직각도 공차'],a:3,e:'모양 공차: 진직도·평면도·진원도·원통도(·선/면의 윤곽도). 평행도·직각도는 자세 공차, 위치도는 위치 공차.',area:'도면'},
+ {s:'1-17',t:'mc',q:'프로그램에서 입력한 이송 속도를 무시하고 조작반의 이송 속도로 이송하게 하는 기능은?',o:['싱글 블록','드라이 런','비상 정지','선택적 정지'],a:2,e:'드라이 런: F값 대신 조작반 이송 속도로 움직여 프로그램을 확인한다.',area:'CNC'},
+ {s:'2-20',t:'mc',q:'명령된 블록에서만 유효한 준비기능은?',o:['G01','G02','G03','G04'],a:4,e:'G04(휴지)는 00그룹 원샷 G코드이다. G01~G03은 모달.',area:'CNC'},
+ {s:'3-21',t:'mc',q:'CNC 선반에서 주축을 160 m/min으로 정회전시키기 위한 명령은?',o:['G95 S160 M03','G96 S160 M03','G97 S160 M03','G97 S160 M04'],a:2,e:'m/min은 절삭 속도 → G96(절삭 속도 일정 제어), 정회전 M03.',area:'CNC'},
+ {s:'3-23',t:'mc',q:'CNC 선반에서 나사 가공을 할 수 없는 준비기능은?',o:['G32','G73','G76','G92'],a:2,e:'나사 가공은 G32·G92·G76. 선반 G73은 형상 반복(모방) 사이클.',area:'CNC'},
+ {s:'3-26',t:'mc',q:'프로그램 전개 번호를 사용해야 하는 사이클은?',o:['G73','G74','G75','G76'],a:1,fix:'기우제반 정답표는 ③ G75',e:'P·Q 전개 번호로 형상을 지정하는 것은 G70~G73 복합 반복 사이클이다.',area:'CNC'},
+ {s:'4-30',t:'mc',q:'소수점을 사용할 수 없는 어드레스는?',o:['A','F','I','P'],a:4,e:'P(휴지 시간 ms, 보조 프로그램 번호, 전개 번호)는 소수점을 쓰지 않는다. G04 P2000 = 2초.',area:'CNC'},
+ {s:'5-13',t:'mc',q:'G50 S1300; G97 M03 S1200; 위 프로그램에서 공작물 지름이 40 mm일 때 주축 회전수[rpm]는?',o:['1000','1100','1200','1300'],a:3,e:'G97은 회전수 일정 제어이므로 지름과 관계없이 S1200 = 1200 rpm. G50 S1300은 최고 회전수 제한.',area:'CNC'},
+ {s:'5-29',t:'mc',q:'프로그램 경로를 기준으로 공구가 진행 방향의 오른쪽에 있을 때 선택해야 하는 공구 지름 보정 G코드는?',o:['G40','G41','G42','G43'],a:3,e:'진행 방향 기준 왼쪽 G41, 오른쪽 G42, 취소 G40.',area:'CNC'},
+ {s:'2-25',t:'mc',q:'CNC 선반에서 단면 거친 절삭 사이클은?',o:['G71','G72','G73','G74'],a:2,e:'G71 내·외경 황삭, G72 단면 황삭, G73 형상 반복, G74 단면 홈·Z 드릴. 교재 17쪽 표는 한 칸씩 밀려 있으니 주의.',area:'CNC'},
+ {s:'4-14',t:'mc',q:'12 mm를 25등분한 버니어캘리퍼스의 최소 눈금[mm]은?',o:['0.01','0.02','0.03','0.04'],a:2,fix:'기우제반 정답표는 ④ 0.04',e:'12 mm = 0.5 mm × 24눈금 → 0.5 ÷ 25 = 0.02 mm.',area:'측정'},
+ {s:'4-26',t:'mc',q:'공구 마모에서 공구 경사면이 오목하게 파이는 현상은?',o:['치핑','피로 파손','플랭크 마모','크레이터 마모'],a:4,e:'경사면 오목 = 크레이터, 여유면 = 플랭크, 날 끝 탈락 = 치핑.',area:'공구'},
+ {s:'4-29',t:'mc',q:'공구의 절손 원인으로 보기 어려운 것은?',o:['절입량이 많다.','돌출량이 적다.','이송 속도가 빠르다.','날의 마모가 심하다.'],a:2,e:'돌출량이 많을 때(길게 물릴 때) 부러지기 쉽다. 적은 것은 원인이 아니다.',area:'공구'},
+ {s:'2-19',t:'mc',q:'공구 수명 판정 기준 방법으로 옳지 않은 것은?',o:['공구의 사용 시간을 확인한다.','절삭 동력을 확인한다.','마모량을 확인한다.','절삭유 온도를 확인한다.'],a:4,e:'판정 기준: 마모량, 가공면, 치수 변화, 절삭 동력, 사용 시간. 절삭유 온도는 아니다.',area:'공구'},
+ {s:'5-20',t:'mc',q:'CNC 밀링에서 3차원 자유 곡면을 가공하기에 가장 적합한 공구는?',o:['리머','볼 엔드밀','러핑 엔드밀','플랫 엔드밀'],a:2,e:'끝이 반구형인 볼 엔드밀로 자유 곡면을 깎는다.',area:'공구'},
+ {s:'1-32',t:'short',q:'몇 개의 단어(워드)가 모여 구성된 한 개의 명령 단위는?',acc:['블록','block','블럭'],show:'블록',e:'주소 + 수치 = 워드, 워드의 모임 = 블록(끝에 EOB ;), 블록의 모임 = 프로그램.',area:'CNC'},
+ {s:'1-33',t:'short',q:'주축 회전수(rpm)를 일정하게 제어하는 준비기능은?',acc:['g97'],show:'G97',e:'G96 절삭 속도 일정 제어, G97 회전수 일정 제어.',area:'CNC'},
+ {s:'5-34',t:'short',q:'볼트로 조립되는 부품에서 볼트 머리가 표면으로 나오지 않도록 볼트 머리 안내 구멍을 팔 때 사용하는 공구는?',acc:['카운터보어','counterbore'],show:'카운터 보어',e:'원통형 자리는 카운터 보어, 접시머리용 원추형은 카운터 싱크.',area:'공구'},
+ {s:'4-34',t:'short',q:'CNC 선반 작업에서 바이트 경사각 및 절삭 속도가 크고, 점성이 있는 연한 재료를 절삭할 때 생기는 칩의 형태는?',acc:['유동형','유동형칩','유동'],show:'유동형 칩',fix:'기우제반 정답표는 열단형 칩',e:'경사각 크게·속도 빠르게 → 유동형. 열단형은 경사각 작게·저속일 때.',area:'공구'},
+ {s:'2-34',t:'multi',q:'절삭유의 사용 목적을 3가지 쓰시오. (쉼표로 구분)',keys:[['냉각'],['윤활'],['세척','칩제거','칩배출','세정'],['방청','녹방지','부식방지']],need:3,show:'냉각, 윤활, 세척(칩 제거) — 방청도 맞다',e:'시험에서는 쓴 순서대로 3번째까지만 채점하므로 확실한 것부터 쓴다.',area:'공구'},
+ {s:'2-39',t:'calc',q:'선반 가공에서 절삭 속도가 314 m/min, 공작물 지름이 50 mm일 때 주축 회전수[rpm]는?',lo:1990,hi:2010,show:'N = 1000V ÷ (πD) = 1000 × 314 ÷ (3.14 × 50) = 2000 rpm',e:'π를 3.14로 두면 정확히 2000 rpm이다.',area:'CNC'},
+ {s:'2-40',t:'calc',q:'머시닝센터에서 M8×1.25 1줄 나사의 탭 가공을 위해 주축을 100 rpm으로 회전시킬 때 이송 속도[m/min]는?',lo:0.124,hi:0.126,warn:[124,126,'mm/min으로 계산한 값이다. 문제의 단위는 m/min이므로 1000으로 나눈다.'],show:'F = 피치 × N = 1.25 × 100 = 125 mm/min = 0.125 m/min',e:'탭 가공 이송 = 피치 × 회전수. 요구 단위를 끝까지 확인한다.',area:'CNC'},
+ {s:'5-39',t:'calc',q:'날당 이송이 0.05 mm/tooth인 4날 엔드밀이 1000 rpm으로 회전할 때 이송 속도[mm/min]는?',lo:199.5,hi:200.5,show:'F = fz × Z × N = 0.05 × 4 × 1000 = 200 mm/min',e:'머시닝센터 테이블 이송 F = 날당 이송 × 날 수 × 회전수.',area:'CNC'}
+];
+safe('mock',()=>{
+  const box=$('mk-box');if(!box)return;const N=MOCK.length;let cur=0;const rec=MOCK.map(()=>null);// {ok, given}
+  const pts=q=>(q.t==='short'||q.t==='multi'||q.t==='calc')?4:2;const max=MOCK.reduce((s,q)=>s+pts(q),0);
+  const TY={ox:'진위형',mc:'4지택일',match:'연결형',short:'단답형',multi:'단답형',calc:'계산형'};const KR=['㉠','㉡','㉢','㉣'],NUM=['①','②','③','④'];
+  const norm=s=>String(s).replace(/\s+/g,'').replace(/[.,·]/g,'').toLowerCase();
+  const grid=$('mk-grid');MOCK.forEach((q,i)=>{const b=document.createElement('button');b.textContent=i+1;b.onclick=()=>go(i);grid.appendChild(b);});
+  function score(){let s=0,n=0;rec.forEach((r,i)=>{if(r){n++;if(r.ok)s+=pts(MOCK[i]);}});return [s,n];}
+  function paintGrid(){[...grid.children].forEach((b,i)=>{b.className=(rec[i]?(rec[i].ok?'ok':'no'):'')+(i===cur?' cur':'');});
+    const [s,n]=score();$('mk-score').textContent=`푼 문항 ${n} / ${N} · 지금까지 ${s}점 / ${max}점`;}
+  function record(ok,given){if(!rec[cur])rec[cur]={ok,given};show();}
+  function fb(){const q=MOCK[cur],r=rec[cur];const f=$('mk-fb');if(!r){f.innerHTML='';return;}
+    const ans=q.t==='ox'?(q.a===1?'O':'X'):q.t==='mc'?NUM[q.a-1]+' '+q.o[q.a-1]:q.t==='match'?q.L.map((l,i)=>l+'–'+KR[q.a[i]-1]).join(' · '):q.show;
+    f.innerHTML=`<div class="${r.ok?'mk-ok':'mk-no'}">${r.ok?'정답이다.':'틀렸다.'} 정답: <b>${ans}</b>${q.fix?` <span class="chk">정답 확인</span>`:''}</div><div class="mk-ex">${q.e}${q.fix?`<span class="tonly mk-fix"> (${q.fix} → 원리로 바로잡은 답으로 채점)</span>`:''}${r.warn?'<br><b style="color:#c8423b">'+r.warn+'</b>':''}</div>`;}
+  function show(){const q=MOCK[cur],r=rec[cur];
+    $('mk-head').innerHTML=`<span class="mk-no-big">${cur+1}</span> <span class="tag">${TY[q.t]}</span> <span class="tag n">${pts(q)}점</span> <span class="gq tonly">기출 ${q.s}</span>`;
+    $('mk-q').textContent=q.q;const o=$('mk-opts');o.innerHTML='';
+    if(q.t==='ox'||q.t==='mc'){const opts=q.t==='ox'?['① O','② X']:q.o.map((s,i)=>NUM[i]+' '+s);
+      opts.forEach((s,i)=>{const b=document.createElement('button');b.className='mk-opt';b.textContent=s;
+        if(r){if(i+1===q.a)b.classList.add('right');else if(r.given===i+1)b.classList.add('wrong');b.disabled=true;}
+        b.onclick=()=>record(i+1===q.a,i+1);o.appendChild(b);});}
+    if(q.t==='match'){const tb=document.createElement('div');tb.className='mk-match';
+      q.L.forEach((l,i)=>{const row=document.createElement('div');const sel=document.createElement('select');sel.innerHTML='<option value="">선택</option>'+q.R.map((s,j)=>`<option value="${j+1}">${KR[j]} ${s}</option>`).join('');
+        if(r){sel.value=r.given[i]||'';sel.disabled=true;sel.className=(+r.given[i]===q.a[i])?'right':'wrong';}
+        row.innerHTML=`<b>${NUM[i]} ${l}</b>`;row.appendChild(sel);tb.appendChild(row);});o.appendChild(tb);
+      if(!r){const b=document.createElement('button');b.className='mk-go';b.textContent='연결 제출';b.onclick=()=>{const g=[...tb.querySelectorAll('select')].map(s=>s.value);if(g.some(v=>!v)){$('mk-fb').textContent='네 개를 모두 연결한다.';return;}record(g.every((v,i)=>+v===q.a[i]),g);};o.appendChild(b);}}
+    if(q.t==='short'||q.t==='multi'||q.t==='calc'){const w=document.createElement('div');w.className='drill';const inp=document.createElement('input');inp.style.width=q.t==='multi'?'360px':'220px';inp.placeholder=q.t==='calc'?'숫자만':'답';
+      const b=document.createElement('button');b.textContent='제출';w.appendChild(inp);w.appendChild(b);o.appendChild(w);
+      if(q.t==='calc'){const p=document.createElement('p');p.className='mini';p.textContent='계산 풀이는 연습장에 쓰고, 답 숫자만 넣는다.';o.appendChild(p);}
+      if(r){inp.value=r.given;inp.disabled=true;b.disabled=true;}
+      const sub=()=>{const v=inp.value.trim();if(!v)return;let ok=false,warn='';
+        if(q.t==='short')ok=q.acc.some(a=>norm(a)===norm(v));
+        if(q.t==='multi'){const parts=v.split(/[,，、\/]| 및 /).map(norm).filter(Boolean).slice(0,3);const hit=new Set();parts.forEach(p=>q.keys.forEach((k,ki)=>{if(k.some(x=>p.includes(norm(x))))hit.add(ki);}));ok=hit.size>=q.need&&parts.length>=3;}
+        if(q.t==='calc'){const x=parseFloat(v.replace(/,/g,''));ok=x>=q.lo&&x<=q.hi;if(q.warn&&x>=q.warn[0]&&x<=q.warn[1])warn=q.warn[2];}
+        if(!rec[cur]){rec[cur]={ok,given:v,warn};show();}};
+      b.onclick=sub;inp.addEventListener('keydown',e=>{if(e.key==='Enter')sub();e.stopPropagation();});}
+    fb();paintGrid();$('mk-prev').disabled=cur===0;$('mk-next').disabled=cur===N-1;}
+  function go(i){cur=clamp(i,0,N-1);show();}
+  function result(){const [s,n]=score();const wrong=MOCK.map((q,i)=>i).filter(i=>rec[i]&&!rec[i].ok),skip=MOCK.map((q,i)=>i).filter(i=>!rec[i]);
+    const by={};MOCK.forEach((q,i)=>{by[q.area]=by[q.area]||[0,0];by[q.area][1]++;if(rec[i]&&rec[i].ok)by[q.area][0]++;});
+    $('mk-head').innerHTML='<span class="mk-no-big">결과</span>';
+    $('mk-q').innerHTML=`<div class="mk-res"><b>${s}</b> / ${max}점 → 100점 기준 <b>${Math.round(s/max*100)}</b>점</div><p class="mini">영역별 맞힌 수: ${Object.entries(by).map(([k,v])=>k+' '+v[0]+'/'+v[1]).join(' · ')}</p>`;
+    const o=$('mk-opts');o.innerHTML='<p class="mini" style="margin:4px 0">틀린 문항(누르면 그 문항으로 간다):</p>';
+    const wl=document.createElement('div');wl.className='mk-wl';(wrong.length?wrong:[]).forEach(i=>{const b=document.createElement('button');b.textContent=(i+1)+'번 '+MOCK[i].q.slice(0,24)+'…';b.onclick=()=>go(i);wl.appendChild(b);});
+    if(!wrong.length)wl.innerHTML='<span class="mini">틀린 문항이 없다.</span>';o.appendChild(wl);
+    $('mk-fb').innerHTML=skip.length?`<div class="mk-ex">아직 풀지 않은 문항 ${skip.length}개: ${skip.map(i=>i+1).join(', ')}</div>`:`<div class="mk-ex">${s/max>=0.8?'80점 이상이다. 틀린 문항의 해설만 다시 읽는다.':'틀린 문항의 영역을 26차시 정리 자료로 다시 공부한다.'}</div>`;
+    paintGrid();}
+  $('mk-prev').onclick=()=>go(cur-1);$('mk-next').onclick=()=>go(cur+1);$('mk-end').onclick=result;
+  $('mk-reset').onclick=()=>{rec.fill(null);go(0);};
+  show();
+  // 교사용 정답표
+  const key=$('mk-key');if(key){const half=Math.ceil(N/2);let h='<tr><th>번</th><th>기출</th><th>유형</th><th>정답</th><th>번</th><th>기출</th><th>유형</th><th>정답</th></tr>';
+    const cell=i=>{const q=MOCK[i];const ans=q.t==='ox'?(q.a===1?'O':'X'):q.t==='mc'?NUM[q.a-1]+' '+q.o[q.a-1]:q.t==='match'?q.a.map((v,j)=>(j+1)+'-'+'ㄱㄴㄷㄹ'[v-1]).join(' / '):q.show;
+      return `<td class="c">${i+1}</td><td class="c">${q.s}</td><td class="c">${TY[q.t]}</td><td>${ans}${q.fix?' <span class="chk">정답 확인</span>':''}</td>`;};
+    for(let i=0;i<half;i++)h+='<tr>'+cell(i)+(i+half<N?cell(i+half):'<td></td><td></td><td></td><td></td>')+'</tr>';key.innerHTML=h;}
+});
+
+/* ================= 26차시 ================= */
+/* G·M코드 카드: [분류, 코드, 뜻]  L 선반 G, M 머시닝센터 G, C 공통 G, X M코드 */
+const CODES=[
+ ['C','G00','급속 위치 결정'],['C','G01','직선 보간(절삭 이송)'],['C','G02','원호 보간 시계 방향(CW)'],['C','G03','원호 보간 반시계 방향(CCW)'],
+ ['C','G04','휴지(일시 정지) — 원샷'],['C','G17','X-Y 평면 선택'],['C','G18','Z-X 평면 선택'],['C','G19','Y-Z 평면 선택'],
+ ['C','G20','인치 입력'],['C','G21','미터법(mm) 입력'],['C','G28','자동 원점 복귀'],['C','G40','공구 지름(인선 반지름) 보정 취소'],['C','G41','공구 지름 보정 좌측'],['C','G42','공구 지름 보정 우측'],
+ ['L','G32','나사 절삭'],['L','G50','공작물 좌표계 설정 · 주축 최고 회전수 지정'],['L','G70','정삭 사이클'],['L','G71','내·외경 황삭 사이클'],['L','G72','단면 황삭 사이클'],
+ ['L','G73','형상 반복(모방) 사이클'],['L','G74','단면 홈 가공 · Z 방향 드릴링 사이클'],['L','G75','X 방향(내·외경) 홈 가공 사이클'],['L','G76','자동 나사 가공 사이클'],
+ ['L','G90','내·외경 절삭 사이클'],['L','G92','나사 절삭 사이클'],['L','G94','단면 절삭 사이클'],['L','G96','절삭 속도 일정 제어(m/min)'],['L','G97','주축 회전수 일정 제어(rpm)'],
+ ['L','G98','분당 이송(mm/min)'],['L','G99','회전당 이송(mm/rev)'],
+ ['M','G43','공구 길이 보정 + 방향'],['M','G44','공구 길이 보정 − 방향'],['M','G49','공구 길이 보정 취소'],['M','G54','공작물 좌표계 1번 선택'],
+ ['M','G73','고속 심공 드릴링 사이클'],['M','G74','역태핑 사이클'],['M','G76','정밀 보링 사이클'],['M','G80','고정 사이클 취소'],['M','G81','드릴링 사이클'],
+ ['M','G82','카운터 보링 사이클(바닥 휴지)'],['M','G83','심공(펙) 드릴링 사이클'],['M','G84','태핑 사이클'],['M','G85','보링 사이클'],
+ ['M','G90','절대 지령'],['M','G91','증분 지령'],['M','G98','고정 사이클 초기점 복귀'],['M','G99','고정 사이클 R점 복귀'],
+ ['X','M00','프로그램 정지'],['X','M01','선택적 프로그램 정지'],['X','M02','프로그램 끝'],['X','M03','주축 정회전(CW)'],['X','M04','주축 역회전(CCW)'],['X','M05','주축 정지'],
+ ['X','M06','공구 교환(머시닝센터)'],['X','M08','절삭유 ON'],['X','M09','절삭유 OFF'],['X','M19','주축 한 방향 정지(오리엔테이션)'],['X','M30','프로그램 끝 · 처음으로 되감기'],
+ ['X','M98','보조 프로그램 호출'],['X','M99','보조 프로그램 끝(복귀)']];
+safe('fc',()=>{const page=$('fc-card').closest('.page');let filt='all',deck=[],k=0,known=0,miss=[];const TAG={L:'CNC 선반',M:'머시닝센터',C:'공통',X:'M코드'};
+  const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  const build=()=>{deck=shuffle(CODES.filter(c=>filt==='all'||c[0]===filt).slice());k=0;known=0;miss=[];showC();};
+  const showC=()=>{if(k>=deck.length){$('fc-tag').textContent='끝';$('fc-code').textContent='완료';$('fc-mean').textContent=`${deck.length}장 중 ${known}장을 알았다`;$('fc-out').textContent='';$('fc-miss').textContent=miss.length?miss.join(' · '):'모두 알았다.';return;}
+    const c=deck[k];$('fc-tag').textContent=TAG[c[0]];$('fc-code').textContent=c[1];$('fc-mean').textContent='';$('fc-out').textContent=`${k+1} / ${deck.length}장 · 알았다 ${known}`;$('fc-miss').textContent=miss.length?miss.join(' · '):'아직 없다.';};
+  group(page,'data-fc',x=>{filt=x;build();});
+  $('fc-flip').onclick=()=>{if(k<deck.length)$('fc-mean').textContent=deck[k][2];};
+  $('fc-yes').onclick=()=>{if(k<deck.length){known++;k++;showC();}};
+  $('fc-no').onclick=()=>{if(k<deck.length){const c=deck[k];miss.push(`${c[1]}(${TAG[c[0]]}) ${c[2]}`);k++;showC();}};
+  $('fc-rst').onclick=build;build();});
+
+/* 공식 계산 연습 */
+safe('fm',()=>{const page=$('fm-q').closest('.page');let mode='all',cur=null,tried=0,ok=0;
+  const pick=a=>a[Math.floor(rnd()*a.length)];
+  const G={
+   N:()=>{const V=pick([80,100,120,150,200,314]),D=pick([20,25,30,40,50,60]);const a=1000*V/(Math.PI*D);return {q:`선반에서 절삭 속도 ${V} m/min, 공작물 지름 ${D} mm일 때 주축 회전수는?`,u:'rpm',a,s:`N = 1000V ÷ (πD) = 1000 × ${V} ÷ (π × ${D}) ≒ ${fx(a,0)} rpm`};},
+   V:()=>{const D=pick([10,20,50,80,100]),N=pick([500,800,1000,1400,2000]);const a=Math.PI*D*N/1000;return {q:`지름 ${D} mm의 공구(공작물)가 ${N} rpm으로 회전할 때 절삭 속도는?`,u:'m/min',a,s:`V = πDN ÷ 1000 = π × ${D} × ${N} ÷ 1000 ≒ ${fx(a,1)} m/min`};},
+   F:()=>{const fz=pick([0.05,0.1,0.15,0.2]),Z=pick([2,3,4]),N=pick([500,800,1000,1200]);const a=fz*Z*N;return {q:`날당 이송 ${fz} mm, ${Z}날 엔드밀, 회전수 ${N} rpm일 때 테이블 이송 속도는?`,u:'mm/min',a,s:`F = fz × Z × N = ${fz} × ${Z} × ${N} = ${fx(a,0)} mm/min`};},
+   T:()=>{const m=pick([[6,1],[8,1.25],[10,1.5],[12,1.75]]),N=pick([100,200,300,400,500]);const a=m[1]*N;return {q:`머시닝센터에서 M${m[0]}×${m[1]} 탭을 ${N} rpm으로 가공할 때 이송 속도는?`,u:'mm/min',a,s:`F = 피치 × N = ${m[1]} × ${N} = ${a} mm/min`};},
+   D:()=>{const m=pick([[6,1],[8,1.25],[10,1.5],[12,1.75],[16,2],[20,2.5]]);const a=m[0]-m[1];return {q:`M${m[0]}×${m[1]} 암나사를 내기 위한 기초 드릴 지름은?`,u:'mm',a,s:`기초 드릴 = 호칭 지름 − 피치 = ${m[0]} − ${m[1]} = ${a} mm`};},
+   E:()=>{const R=pick([2,3,4,5,6.4,8]);const a=R/2;return {q:`편심 축을 한 바퀴 돌렸더니 다이얼게이지 바늘이 ${R} mm 움직였다. 편심량은?`,u:'mm',a,s:`편심량 = 읽음 ÷ 2 = ${R} ÷ 2 = ${a} mm`};},
+   VN:()=>{const u=pick([1,0.5]),n=pick(u===1?[20,50]:[25,50]);const L=(n-1)*u;const a=u/n;return {q:`어미자 1눈금이 ${u} mm이고, ${L} mm를 아들자 ${n}등분한 버니어캘리퍼스의 최소 눈금은?`,u:'mm',a,s:`최소 눈금 = 어미자 1눈금 ÷ 등분 수 = ${u} ÷ ${n} = ${a} mm`};},
+   L:()=>{const n=pick([1,2,3]),p=pick([1,1.5,2]),ang=pick([90,180,270,360,720]);const a=n*p*ang/360;return {q:`피치 ${p} mm, ${n}줄 나사를 ${ang}° 돌렸을 때 축 방향 이동량은?`,u:'mm',a,s:`이동량 = 줄 수 × 피치 × 회전각 ÷ 360 = ${n} × ${p} × ${ang} ÷ 360 = ${fx(a,3).replace(/\.?0+$/,'')} mm`};},
+   I:()=>{const hu=pick([0.021,0.025,0.030]),su=pick([0.042,0.050,0.059]),sl=+(su-0.016).toFixed(3);const a=+(su-0).toFixed(3);return {q:`구멍 ∅40 (+${hu} / 0), 축 ∅40 (+${su} / +${sl})일 때 최대 죔새는?`,u:'mm',a,s:`최대 죔새 = 축 최대 − 구멍 최소 = 40.${String(Math.round(su*1000)).padStart(3,'0')} − 40.000 = ${a} mm`};}
+  };
+  const keys=Object.keys(G);
+  const mk=()=>{const k=mode==='all'?pick(keys):mode;cur=G[k]();$('fm-q').textContent=cur.q;$('fm-unit').textContent=cur.u;$('fm-in').value='';$('fm-fb').textContent='';};
+  group(page,'data-fm',x=>{mode=x;mk();});
+  const chk=()=>{const v=parseFloat($('fm-in').value.replace(/,/g,''));if(isNaN(v)){$('fm-fb').textContent='숫자를 넣는다.';return;}
+    tried++;const good=Math.abs(v-cur.a)<=Math.max(Math.abs(cur.a)*0.01,0.0005);if(good)ok++;
+    $('fm-fb').textContent=good?'정답이다. '+cur.s:'다시 생각해 보자. 공식을 먼저 고른다.';$('fm-cnt').textContent=`푼 횟수 ${tried} · 맞힌 횟수 ${ok}`;};
+  $('fm-chk').onclick=chk;$('fm-in').addEventListener('keydown',e=>{if(e.key==='Enter')chk();});
+  $('fm-new').onclick=mk;$('fm-show').onclick=()=>{$('fm-fb').textContent=cur.s;};mk();});
+
+/* ================= 자습판 추가 그림(Ⅳ) ================= */
+/* 22차시: 편심 축이 돌면 다이얼게이지 바늘이 2e만큼 움직인다 (그림 25 px = 2 mm) */
+safe('ecc',()=>widget('w-ecc',{a:0,lo:1e9,hi:-1e9,
+  init(){this.g=el('g',{},this.svg);},
+  step(dt){this.a+=dt*1.2;if(this.a>Math.PI*2){this.a-=Math.PI*2;}},
+  draw(){const g=this.g;g.innerHTML='';const O=[130,115],E=25,R=40,a=this.a;
+    const ec=[O[0]+E*Math.cos(a),O[1]-E*Math.sin(a)];
+    el('circle',{cx:O[0],cy:O[1],r:80,fill:'#e6ecf3',stroke:C.navy,'stroke-width':2},g);
+    for(let k=0;k<4;k++){const b=a+k*Math.PI/2;const jx=O[0]+Math.cos(b)*70,jy=O[1]-Math.sin(b)*70;
+      el('rect',{x:jx-9,y:jy-9,width:18,height:18,fill:C.muted,transform:`rotate(${-b/deg} ${jx} ${jy})`},g);}
+    el('circle',{cx:ec[0],cy:ec[1],r:R,fill:'#fff4d6',stroke:'#b8963c','stroke-width':2.5},g);
+    el('circle',{cx:O[0],cy:O[1],r:4,fill:C.navy},g);el('circle',{cx:ec[0],cy:ec[1],r:4,fill:C.red},g);
+    el('line',{x1:O[0],y1:O[1],x2:ec[0],y2:ec[1],stroke:C.red,'stroke-width':2},g);
+    /* 다이얼게이지 스핀들이 원통 오른쪽 면(높이 115)에 닿는다 */
+    const dy=O[1]-ec[1];const sx=ec[0]+Math.sqrt(R*R-dy*dy);const mm=(sx-(O[0]-E+R))/E*2;  /* 가장 들어갔을 때를 0으로 */
+    el('rect',{x:sx,y:O[1]-3,width:300-sx,height:6,fill:C.navy},g);
+    el('circle',{cx:330,cy:O[1],r:34,fill:'#fff',stroke:C.navy,'stroke-width':2.5},g);
+    for(let k=0;k<20;k++){const b=k/20*Math.PI*2;el('line',{x1:330+Math.cos(b)*28,y1:O[1]+Math.sin(b)*28,x2:330+Math.cos(b)*33,y2:O[1]+Math.sin(b)*33,stroke:C.navy},g);}
+    const nb=-Math.PI/2+mm/4*Math.PI*1.5;el('line',{x1:330,y1:O[1],x2:330+Math.cos(nb)*26,y2:O[1]+Math.sin(nb)*26,stroke:C.red,'stroke-width':3},g);
+    txt(g,330,O[1]+52,'읽음 '+fx(mm,2)+' mm',{'text-anchor':'middle','font-size':13,fill:C.navy,'font-weight':700});
+    txt(g,20,18,'단동척 조(4개)와 편심 원통이 함께 돈다',{'font-size':11.5,fill:C.navy});
+    txt(g,250,200,'최대 − 최소 = 4.00 mm = 2 × e',{'font-size':12.5,fill:C.red,'font-weight':700});
+    txt(g,250,220,'→ 편심량 e = 4.00 ÷ 2 = 2.00 mm',{'font-size':12.5,fill:C.red,'font-weight':700});}}));
+
+/* 휴대폰·태블릿: 좌우로 밀어 쪽 넘기기, 세로 화면 안내 */
+safe('mobile',()=>{
+  const vp=$('viewport');let sx=null,sy=0,st=0;
+  vp.addEventListener('touchstart',e=>{
+    if(e.touches.length!==1||e.target.closest('input,select,textarea')){sx=null;return;}
+    sx=e.touches[0].clientX;sy=e.touches[0].clientY;st=Date.now();},{passive:true});
+  vp.addEventListener('touchend',e=>{
+    if(sx===null)return;
+    const zoomed=window.visualViewport&&window.visualViewport.scale>1.05;  /* 확대 중에는 화면 이동으로 본다 */
+    const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;sx=null;
+    if(!zoomed&&Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5&&Date.now()-st<800)show(cur+(dx<0?1:-1));},{passive:true});
+  const rot=$('rot');if(rot){
+    try{if(localStorage.getItem('cam-rot-off')==='1')document.body.classList.add('rot-off');}catch(e){}
+    $('rot-x').onclick=()=>{document.body.classList.add('rot-off');try{localStorage.setItem('cam-rot-off','1');}catch(e){}};}
+});
+
+/* 시작 */
+buildToc();
+let start=0;try{const h=parseInt((location.hash||'').replace('#p',''),10);if(h>0)start=h-1;}catch(e){}
+document.body.classList.toggle('teacher',teacher);
+if($('mode'))$('mode').textContent=teacher?'학생 보기로 전환':'교사 보기로 전환';
+show(start);fit();
+(function tick(ts){const dt=Math.min(0.05,(ts-last)/1000);last=ts;
+  widgets.forEach(w=>{if(w.page.classList.contains('on')&&w.playing){w.step(dt);w.draw();}});
+  minis.forEach(m=>{if(m.page.classList.contains('on'))m.step(dt);});requestAnimationFrame(tick);})(performance.now());
+/* 점검용: ?click=선택자1|선택자2 → 불러온 뒤 차례로 누른다 */
+try{const q=new URLSearchParams(location.search).get('click');if(q)setTimeout(()=>q.split('|').forEach((s,i)=>setTimeout(()=>{const e=document.querySelector(s);if(e)e.click();},i*50)),50);}catch(e){}
+/* 점검용: ?t=0.7 → 움직이는 그림의 진행 시점을 고정해 그린다 */
+try{const tq=parseFloat(new URLSearchParams(location.search).get('t'));if(!isNaN(tq))setTimeout(()=>widgets.forEach(w=>{if('t' in w){w.t=tq;w.playing=false;w.draw();}}),400);}catch(e){}
+
+</script>
+</body>
+</html>
